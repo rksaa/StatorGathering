@@ -43,6 +43,9 @@
             <button onclick="switchTab('denah')" id="tab-denah" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
                 <i class="fa-solid fa-map-location-dot me-1"></i> Denah Villa
             </button>
+            <button onclick="switchTab('peraturan')" id="tab-peraturan" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
+                <i class="fa-solid fa-clipboard-list me-1"></i> Peraturan Villa
+            </button>
         </div>
     </nav>
 
@@ -460,11 +463,77 @@
             </div>
         </section>
 
+        <!-- TAB 5: PERATURAN VILLA -->
+        <section id="content-peraturan" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-xl shadow-sm border space-y-6">
+                <div class="flex items-center justify-between border-b pb-4">
+                    <h2 class="text-xl font-bold text-slate-800">
+                        <i class="fa-solid fa-clipboard-check text-blue-600 me-2"></i>Peraturan & Tata Tertib Villa
+                    </h2>
+                    <span class="text-xs bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-medium">Wajib Ditaati</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Aturan Kebersihan & Fasilitas -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="font-semibold text-slate-800 flex items-center text-base">
+                            <i class="fa-solid fa-broom text-blue-500 me-2"></i> Kebersihan & Fasilitas
+                        </h3>
+                        <ul class="text-sm space-y-2 text-slate-600 list-disc list-inside">
+                            <li>Menjaga kebersihan area indoor dan outdoor villa.</li>
+                            <li>Dilarang merusak atau memindahkan fasilitas villa tanpa izin.</li>
+                            <li>Buang sampah pada tempat sampah yang telah disediakan.</li>
+                            <li>Matikan AC, lampu, dan kran air jika tidak digunakan.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Aturan Jam Tenang & Keamanan -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="font-semibold text-slate-800 flex items-center text-base">
+                            <i class="fa-solid fa-volume-xmark text-indigo-500 me-2"></i> Jam Tenang & Etika
+                        </h3>
+                        <ul class="text-sm space-y-2 text-slate-600 list-disc list-inside">
+                            <li>Harap menjaga ketenangan setelah pukul 22.00 WIB.</li>
+                            <li>Saling menghormati antar sesama peserta dan warga sekitar.</li>
+                            <li>Dilarang membawa barang berbahaya, senjata tajam, atau obat terlarang.</li>
+                            <li>Jaga barang berharga masing-masing selama kegiatan berlangsung.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Aturan Kolam Renang & Area Umum -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="font-semibold text-slate-800 flex items-center text-base">
+                            <i class="fa-solid fa-person-swimming text-cyan-500 me-2"></i> Kolam Renang
+                        </h3>
+                        <ul class="text-sm space-y-2 text-slate-600 list-disc list-inside">
+                            <li>Gunakan pakaian renang yang sesuai.</li>
+                            <li>Dilarang makan atau minum di dalam kolam renang.</li>
+                            <li>Penggunaan kolam renang setelah pukul 21.00 WIB harap tetap tenang.</li>
+                            <li>Pastikan tubuh dalam kondisi kering sebelum masuk ke dalam bangunan villa.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Aturan Check-In & Check-Out -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <h3 class="font-semibold text-slate-800 flex items-center text-base">
+                            <i class="fa-solid fa-right-from-bracket text-amber-500 me-2"></i> Check-In / Check-Out
+                        </h3>
+                        <ul class="text-sm space-y-2 text-slate-600 list-disc list-inside">
+                            <li>Check-in resmi dibuka pukul 12.00 WIB (Hari 1).</li>
+                            <li>Proses Check-out wajib diselesaikan maksimal pukul 11.00 WIB (Hari 2).</li>
+                            <li>Pastikan tidak ada barang pribadi yang tertinggal saat check-out.</li>
+                            <li>Kembalikan kunci kamar kepada PIC Check Out (Hafiz).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
     <footer class="bg-slate-800 text-slate-400 py-6 text-center text-xs mt-auto">
-        <p>&copy; 2024 STATOR Gathering Bandung. All Rights Reserved.</p>
+        <p>&copy; 2026 STATOR Gathering Pangalengan Bandung. All Rights Reserved.</p>
     </footer>
 
     <!-- Custom Script -->
