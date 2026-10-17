@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STATOR GATHERING 2024 - Bandung</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header / Hero Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between">
+            <div>
+                <span class="bg-blue-500 text-xs uppercase px-2.5 py-1 rounded-full font-semibold tracking-wide">Pedoman Kegiatan</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold mt-2 tracking-tight">STATOR GATHERING 2024</h1>
+                <p class="text-blue-100 mt-1"><i class="fa-solid fa-location-dot me-1"></i> Bandung, 30 November - 1 Desember 2024</p>
+            </div>
+            <div class="mt-4 sm:mt-0 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center">
+                <span class="block text-2xl font-bold">2 Hari 1 Malam</span>
+                <span class="text-xs text-blue-100">Villa Stator Bandung</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white shadow-sm border-b sticky top-0 z-30">
+        <div class="max-w-6xl mx-auto px-4 flex justify-around sm:justify-start space-x-2 sm:space-x-8 overflow-x-auto">
+            <button onclick="switchTab('rundown')" id="tab-rundown" class="tab-btn active py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
+                <i class="fa-solid fa-clock me-1"></i> Rundown Acara
+            </button>
+            <button onclick="switchTab('kamar')" id="tab-kamar" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
+                <i class="fa-solid fa-bed me-1"></i> List Kamar
+            </button>
+            <button onclick="switchTab('kelompok')" id="tab-kelompok" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
+                <i class="fa-solid fa-users me-1"></i> Kelompok
+            </button>
+            <button onclick="switchTab('denah')" id="tab-denah" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
+                <i class="fa-solid fa-map-location-dot me-1"></i> Denah Villa
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- TAB 1: RUNDOWN ACARA -->
+        <section id="content-rundown" class="space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
+                <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-calendar-days text-blue-600 me-2"></i>Susunan Acara</h2>
+                <div class="flex gap-2">
+                    <button onclick="filterDay('all', event)" class="day-btn text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg font-medium">Semua Hari</button>
+                    <button onclick="filterDay('hari1', event)" class="day-btn text-xs bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg font-medium">Hari 1</button>
+                    <button onclick="filterDay('hari2', event)" class="day-btn text-xs bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg font-medium">Hari 2</button>
+                </div>
+            </div>
+
+            <!-- Timeline List -->
+            <div class="bg-white rounded-xl shadow-sm border overflow-hidden divide-y divide-slate-100">
+                <!-- Hari 1 Header -->
+                <div class="day-row day-hari1 bg-blue-50 px-6 py-3 font-semibold text-blue-900 border-l-4 border-blue-600 flex justify-between items-center">
+                    <span>HARI 1 — Sabtu, 30 November 2024</span>
+                    <span class="text-xs bg-blue-200 text-blue-800 px-2 py-0.5 rounded">30 Nov</span>
+                </div>
+                <!-- Schedule Items Hari 1 -->
+                <div class="day-row day-hari1 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-blue-600 w-28"><i class="fa-regular fa-clock me-1"></i>08.30 - 12.00</span>
+                        <span class="font-medium text-slate-800">Keberangkatan</span>
+                    </div>
+                    <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: RAFLI & DANI</span>
+                </div>
+                <div class="day-row day-hari1 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-blue-600 w-28"><i class="fa-regular fa-clock me-1"></i>12.00 - 14.00</span>
+                        <span class="font-medium text-slate-800">ISHOMA</span>
+                    </div>
+                    <span class="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: -</span>
+                </div>
+                <div class="day-row day-hari1 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-blue-600 w-28"><i class="fa-regular fa-clock me-1"></i>14.00 - 16.00</span>
+                        <span class="font-medium text-slate-800">Fun Games</span>
+                    </div>
+                    <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: DANI, HAFIF, HANIF</span>
+                </div>
+                <div class="day-row day-hari1 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-blue-600 w-28"><i class="fa-regular fa-clock me-1"></i>16.00 - 19.30</span>
+                        <span class="font-medium text-slate-800">Free Time</span>
+                    </div>
+                    <span class="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: -</span>
+                </div>
+                <div class="day-row day-hari1 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-blue-600 w-28"><i class="fa-regular fa-clock me-1"></i>19.30 - 20.30</span>
+                        <span class="font-medium text-slate-800">Acara Inti</span>
+                    </div>
+                    <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: HANIF & WULAN</span>
+                </div>
+                <div class="day-row day-hari1 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-blue-600 w-28"><i class="fa-regular fa-clock me-1"></i>20.30 - Selesai</span>
+                        <span class="font-medium text-slate-800">BBQ & Snack</span>
+                    </div>
+                    <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: NANDA</span>
+                </div>
+
+                <!-- Hari 2 Header -->
+                <div class="day-row day-hari2 bg-indigo-50 px-6 py-3 font-semibold text-indigo-900 border-l-4 border-indigo-600 flex justify-between items-center">
+                    <span>HARI 2 — Minggu, 1 Desember 2024</span>
+                    <span class="text-xs bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded">1 Des</span>
+                </div>
+                <!-- Schedule Items Hari 2 -->
+                <div class="day-row day-hari2 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-indigo-600 w-28"><i class="fa-regular fa-clock me-1"></i>06.00 - 07.00</span>
+                        <span class="font-medium text-slate-800">Senam Pagi</span>
+                    </div>
+                    <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: FRASA & YUSUF</span>
+                </div>
+                <div class="day-row day-hari2 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-indigo-600 w-28"><i class="fa-regular fa-clock me-1"></i>07.00 - 08.00</span>
+                        <span class="font-medium text-slate-800">Sarapan</span>
+                    </div>
+                    <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: NANDA</span>
+                </div>
+                <div class="day-row day-hari2 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-indigo-600 w-28"><i class="fa-regular fa-clock me-1"></i>08.00 - 10.00</span>
+                        <span class="font-medium text-slate-800">Free Time</span>
+                    </div>
+                    <span class="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: -</span>
+                </div>
+                <div class="day-row day-hari2 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-semibold text-indigo-600 w-28"><i class="fa-regular fa-clock me-1"></i>10.00 - 11.00</span>
+                        <span class="font-medium text-slate-800">Check Out</span>
+                    </div>
+                    <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: HAFIZ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: LIST KAMAR -->
+        <section id="content-kamar" class="space-y-6 hidden">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
+                <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-bed text-blue-600 me-2"></i>Pembagian Kamar</h2>
+                <div class="w-full sm:w-72 relative">
+                    <input type="text" id="searchKamar" onkeyup="filterKamar()" placeholder="Cari nama peserta..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Grid Kamar -->
+            <div id="kamarGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Kamar Cewe 1 -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-pink-200 overflow-hidden">
+                    <div class="bg-pink-500 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-venus me-2"></i>Kamar Cewe 1</span>
+                        <span class="text-xs bg-pink-700 px-2 py-0.5 rounded-full">5 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Della <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Marya <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Mudhya <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Tasya <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Elfitri <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kamar Cewe 2 -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-pink-200 overflow-hidden">
+                    <div class="bg-pink-500 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-venus me-2"></i>Kamar Cewe 2</span>
+                        <span class="text-xs bg-pink-700 px-2 py-0.5 rounded-full">5 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Radhia <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Rani <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Gita <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Dewi <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Uni <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kamar Cewe 3 -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-pink-200 overflow-hidden">
+                    <div class="bg-pink-500 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-venus me-2"></i>Kamar Cewe 3</span>
+                        <span class="text-xs bg-pink-700 px-2 py-0.5 rounded-full">4 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Atiq <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Shela <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Anita <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Regina <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kamar Cewe 4 -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-pink-200 overflow-hidden">
+                    <div class="bg-pink-500 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-venus me-2"></i>Kamar Cewe 4</span>
+                        <span class="text-xs bg-pink-700 px-2 py-0.5 rounded-full">4 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Cha cha <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Chely <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Nita <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Zahra <span class="text-xs text-pink-500 font-semibold">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kamar Cowo 1 -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-blue-200 overflow-hidden">
+                    <div class="bg-blue-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-mars me-2"></i>Kamar Cowo 1</span>
+                        <span class="text-xs bg-blue-800 px-2 py-0.5 rounded-full">6 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Apri <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Iman <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Nirwan <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Ryan <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Yadi <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Farhan <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kamar Cowo 2 -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-blue-200 overflow-hidden">
+                    <div class="bg-blue-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-mars me-2"></i>Kamar Cowo 2</span>
+                        <span class="text-xs bg-blue-800 px-2 py-0.5 rounded-full">6 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Johari <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Nazmi <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Tomi <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Davin <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Fadly <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Angga <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kamar Cowo 3 -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-blue-200 overflow-hidden">
+                    <div class="bg-blue-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-mars me-2"></i>Kamar Cowo 3</span>
+                        <span class="text-xs bg-blue-800 px-2 py-0.5 rounded-full">6 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Darda <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Yanto <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Risky <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Irfan <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Ugi <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Bintang <span class="text-xs text-blue-500 font-semibold">(L)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kamar Kartap -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-amber-200 overflow-hidden">
+                    <div class="bg-amber-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-user-shield me-2"></i>Kamar Kartap</span>
+                        <span class="text-xs bg-amber-800 px-2 py-0.5 rounded-full">5 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Gholy <span class="text-xs text-amber-600 font-medium">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Ade Irfan <span class="text-xs text-amber-600 font-medium">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Antonius <span class="text-xs text-amber-600 font-medium">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Agus <span class="text-xs text-amber-600 font-medium">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Oky <span class="text-xs text-amber-600 font-medium">(L)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kamar Panitia -->
+                <div class="kamar-card bg-white rounded-xl shadow-sm border border-amber-200 overflow-hidden">
+                    <div class="bg-amber-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span><i class="fa-solid fa-user-gear me-2"></i>Kamar Panitia</span>
+                        <span class="text-xs bg-amber-800 px-2 py-0.5 rounded-full">5 Orang</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between">Panitia 1 <span class="text-xs text-amber-600 font-medium">Panitia</span></li>
+                        <li class="pt-1 flex items-center justify-between">Panitia 2 <span class="text-xs text-amber-600 font-medium">Panitia</span></li>
+                        <li class="pt-1 flex items-center justify-between">Panitia 3 <span class="text-xs text-amber-600 font-medium">Panitia</span></li>
+                        <li class="pt-1 flex items-center justify-between">Panitia 4 <span class="text-xs text-amber-600 font-medium">Panitia</span></li>
+                        <li class="pt-1 flex items-center justify-between">Panitia 5 <span class="text-xs text-amber-600 font-medium">Panitia</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: DAFTAR KELOMPOK -->
+        <section id="content-kelompok" class="space-y-6 hidden">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
+                <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-users text-blue-600 me-2"></i>Pembagian Kelompok</h2>
+                <div class="w-full sm:w-72 relative">
+                    <input type="text" id="searchKelompok" onkeyup="filterKelompok()" placeholder="Cari nama anggota..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Grid Kelompok -->
+            <div id="kelompokGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Kelompok 1 -->
+                <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span>Kelompok 1</span>
+                        <span class="text-xs bg-indigo-800 px-2 py-0.5 rounded-full">8 Anggota</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between font-semibold text-indigo-700">Mas Agus © <span class="text-xs bg-indigo-50 border border-indigo-200 text-indigo-600 px-2 py-0.5 rounded">Ketua</span></li>
+                        <li class="pt-1 flex items-center justify-between">Nirwan <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Davin <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Johari <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Gita <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Zahra <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Mudya <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Regina <span class="text-xs text-pink-500">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kelompok 2 -->
+                <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span>Kelompok 2</span>
+                        <span class="text-xs bg-indigo-800 px-2 py-0.5 rounded-full">7 Anggota</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between font-semibold text-indigo-700">Mas Anton <span class="text-xs bg-indigo-50 border border-indigo-200 text-indigo-600 px-2 py-0.5 rounded">Ketua</span></li>
+                        <li class="pt-1 flex items-center justify-between">Imin <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Yadi <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Yanto <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Rani <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Tasya <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Dewi <span class="text-xs text-pink-500">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kelompok 3 -->
+                <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span>Kelompok 3</span>
+                        <span class="text-xs bg-indigo-800 px-2 py-0.5 rounded-full">8 Anggota</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between font-semibold text-indigo-700">Bang Gholi <span class="text-xs bg-indigo-50 border border-indigo-200 text-indigo-600 px-2 py-0.5 rounded">Ketua</span></li>
+                        <li class="pt-1 flex items-center justify-between">Dimas <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Kiwil <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Ikhsan <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Tomy <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Nita <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Della <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Marya <span class="text-xs text-pink-500">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kelompok 4 -->
+                <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span>Kelompok 4</span>
+                        <span class="text-xs bg-indigo-800 px-2 py-0.5 rounded-full">7 Anggota</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between font-semibold text-indigo-700">Mang Ade <span class="text-xs bg-indigo-50 border border-indigo-200 text-indigo-600 px-2 py-0.5 rounded">Ketua</span></li>
+                        <li class="pt-1 flex items-center justify-between">Yusuf <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Darda <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Riski <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Rafly <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Atiq <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Elfitri <span class="text-xs text-pink-500">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kelompok 5 -->
+                <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span>Kelompok 5</span>
+                        <span class="text-xs bg-indigo-800 px-2 py-0.5 rounded-full">7 Anggota</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between font-semibold text-indigo-700">Febri <span class="text-xs bg-indigo-50 border border-indigo-200 text-indigo-600 px-2 py-0.5 rounded">Ketua</span></li>
+                        <li class="pt-1 flex items-center justify-between">Adil <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Apri <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Cipung <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Meikel <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Shela <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Anita <span class="text-xs text-pink-500">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kelompok 6 -->
+                <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span>Kelompok 6</span>
+                        <span class="text-xs bg-indigo-800 px-2 py-0.5 rounded-full">7 Anggota</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between font-semibold text-indigo-700">Tofik <span class="text-xs bg-indigo-50 border border-indigo-200 text-indigo-600 px-2 py-0.5 rounded">Ketua</span></li>
+                        <li class="pt-1 flex items-center justify-between">Ryan <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Nazmi <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Angga <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Cacing <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Chelly <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Cha Cha <span class="text-xs text-pink-500">(P)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Kelompok 7 -->
+                <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
+                        <span>Kelompok 7</span>
+                        <span class="text-xs bg-indigo-800 px-2 py-0.5 rounded-full">7 Anggota</span>
+                    </div>
+                    <ul class="p-4 space-y-2 text-sm divide-y divide-slate-100">
+                        <li class="pt-1 flex items-center justify-between font-semibold text-indigo-700">Mas Oky <span class="text-xs bg-indigo-50 border border-indigo-200 text-indigo-600 px-2 py-0.5 rounded">Ketua</span></li>
+                        <li class="pt-1 flex items-center justify-between">Farhan <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Bintang <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Ugi <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Irfan <span class="text-xs text-slate-400">(L)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Uni <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Radia <span class="text-xs text-pink-500">(P)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: DENAH VILLA -->
+        <section id="content-denah" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-xl shadow-sm border text-center space-y-4">
+                <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-map-location-dot text-blue-600 me-2"></i>Denah Lokasi Villa</h2>
+                <p class="text-slate-500 text-sm">Berikut tata letak fasilitas dan area umum Villa Stator Gathering Bandung</p>
+                
+                <!-- Layout Grid -->
+                <div class="max-w-3xl mx-auto border-2 border-slate-300 rounded-xl p-4 bg-slate-50 grid grid-cols-1 md:grid-cols-3 gap-3 text-sm font-medium">
+                    <div class="bg-emerald-100 text-emerald-800 border border-emerald-300 p-4 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-tree me-2"></i> Garden Area
+                    </div>
+                    <div class="bg-cyan-100 text-cyan-800 border border-cyan-300 p-4 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-water-ladder me-2"></i> Swimming Pool
+                    </div>
+                    <div class="bg-amber-100 text-amber-800 border border-amber-300 p-4 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-utensils me-2"></i> Dining & Kitchen
+                    </div>
+                    <div class="md:col-span-2 bg-blue-100 text-blue-800 border border-blue-300 p-6 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-couch me-2"></i> Living Room Utama
+                    </div>
+                    <div class="bg-slate-200 text-slate-800 border border-slate-300 p-4 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-square-parking me-2"></i> Entrance / Parking
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-400 py-6 text-center text-xs mt-auto">
+        <p>&copy; 2024 STATOR Gathering Bandung. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+</html>
