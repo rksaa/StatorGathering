@@ -2,6 +2,12 @@
  * Berpindah antar Tab Utama (Rundown, Kamar, Kelompok, Denah, Peraturan)
  */
 function switchTab(tabName) {
+    const targetSection = document.getElementById('content-' + tabName);
+    const targetTab = document.getElementById('tab-' + tabName);
+    if (!targetSection || !targetTab || targetTab.disabled) {
+        return;
+    }
+
     // Sembunyikan semua section
     document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
     
@@ -9,16 +15,28 @@ function switchTab(tabName) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
     // Tampilkan section yang dipilih
-    const targetSection = document.getElementById('content-' + tabName);
-    if (targetSection) {
-        targetSection.classList.remove('hidden');
-    }
+    targetSection.classList.remove('hidden');
 
     // Aktifkan tombol tab yang dipilih
-    const targetTab = document.getElementById('tab-' + tabName);
-    if (targetTab) {
-        targetTab.classList.add('active');
-    }
+    targetTab.classList.add('active');
+}
+
+function initializeLockedTabs() {
+    const isUnlocked = Date.now() >= new Date(2026, 10, 6).getTime();
+
+    ['kamar', 'kelompok'].forEach(tabName => {
+        const tab = document.getElementById('tab-' + tabName);
+        const section = document.getElementById('content-' + tabName);
+
+        tab.disabled = !isUnlocked;
+        tab.setAttribute('aria-disabled', String(!isUnlocked));
+        tab.title = isUnlocked ? '' : 'Dibuka pada 6 November 2026';
+        tab.querySelector('.tab-lock-icon').hidden = isUnlocked;
+        section.querySelector('.unlock-notice').classList.toggle('hidden', isUnlocked);
+        section.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.toggle('hidden', !isUnlocked);
+        });
+    });
 }
 
 /**
@@ -87,3 +105,5 @@ function filterKelompok() {
         }
     });
 }
+
+initializeLockedTabs();

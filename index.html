@@ -11,45 +11,59 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+<body class="text-slate-800 font-sans min-h-screen">
+
+    <!-- Sidebar Navigasi -->
+    <aside class="side-nav" aria-label="Navigasi utama">
+        <div class="side-profile">
+            <div class="side-logo" aria-hidden="true"><i class="fa-solid fa-bolt"></i></div>
+            <p class="side-title">STATOR</p>
+            <p class="side-sub">Gathering 2026</p>
+        </div>
+
+        <nav class="side-items">
+            <button onclick="switchTab('rundown')" id="tab-rundown" class="tab-btn active">
+                <i class="fa-solid fa-clock nav-icon"></i><span class="nav-label">Rundown Acara</span>
+            </button>
+            <button onclick="switchTab('kamar')" id="tab-kamar" class="tab-btn" disabled aria-disabled="true" title="Dibuka pada 6 November 2026">
+                <i class="fa-solid fa-bed nav-icon"></i><span class="nav-label">List Kamar</span><i class="fa-solid fa-lock tab-lock-icon"></i>
+            </button>
+            <button onclick="switchTab('kelompok')" id="tab-kelompok" class="tab-btn" disabled aria-disabled="true" title="Dibuka pada 6 November 2026">
+                <i class="fa-solid fa-users nav-icon"></i><span class="nav-label">Kelompok</span><i class="fa-solid fa-lock tab-lock-icon"></i>
+            </button>
+            <button onclick="switchTab('denah')" id="tab-denah" class="tab-btn">
+                <i class="fa-solid fa-map-location-dot nav-icon"></i><span class="nav-label">Denah Villa</span>
+            </button>
+            <button onclick="switchTab('peraturan')" id="tab-peraturan" class="tab-btn">
+                <i class="fa-solid fa-clipboard-list nav-icon"></i><span class="nav-label">Peraturan Villa</span>
+            </button>
+        </nav>
+
+        <div class="side-footer">
+            <p class="side-footer-label">INFO</p>
+            <p class="side-footer-text"><i class="fa-solid fa-lock me-1"></i>List Kamar &amp; Kelompok dibuka 6 November 2026</p>
+        </div>
+    </aside>
+
+    <!-- Wrapper konten (digeser agar tidak tertutup sidebar) -->
+    <div class="app-content min-h-screen flex flex-col">
 
     <!-- Header / Hero Section -->
-    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg">
+    <header class="app-header text-white">
         <div class="max-w-6xl mx-auto px-4 py-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between">
             <div>
-                <span class="bg-blue-500 text-xs uppercase px-2.5 py-1 rounded-full font-semibold tracking-wide">Pedoman Kegiatan</span>
+                <span class="header-chip text-xs uppercase px-2.5 py-1 rounded-full font-semibold tracking-wide">Pedoman Kegiatan</span>
                 <h1 class="text-3xl sm:text-4xl font-extrabold mt-2 tracking-tight">STATOR GATHERING 2026</h1>
-                <p class="text-blue-100 mt-1"><i class="fa-solid fa-location-dot me-1"></i> Bandung, 7 Oktober - 8 Oktober 2026</p>
+                <p class="text-slate-200 mt-1"><i class="fa-solid fa-location-dot me-1"></i> Bandung, 7 Oktober - 8 Oktober 2026</p>
             </div>
             <div class="mt-4 sm:mt-0 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 text-center">
                 <span class="block text-2xl font-bold">2 Hari 1 Malam</span>
-                <span class="text-xs text-blue-100">Villa Pangalengan Bandung</span>
+                <span class="text-xs text-slate-200">Villa Pangalengan Bandung</span>
             </div>
         </div>
     </header>
 
-    <!-- Navigation Tabs -->
-    <nav class="bg-white shadow-sm border-b sticky top-0 z-30">
-        <div class="max-w-6xl mx-auto px-4 flex justify-around sm:justify-start space-x-2 sm:space-x-8 overflow-x-auto">
-            <button onclick="switchTab('rundown')" id="tab-rundown" class="tab-btn active py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
-                <i class="fa-solid fa-clock me-1"></i> Rundown Acara
-            </button>
-            <button onclick="switchTab('kamar')" id="tab-kamar" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
-                <i class="fa-solid fa-bed me-1"></i> List Kamar
-            </button>
-            <button onclick="switchTab('kelompok')" id="tab-kelompok" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
-                <i class="fa-solid fa-users me-1"></i> Kelompok
-            </button>
-            <button onclick="switchTab('denah')" id="tab-denah" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
-                <i class="fa-solid fa-map-location-dot me-1"></i> Denah Villa
-            </button>
-            <button onclick="switchTab('peraturan')" id="tab-peraturan" class="tab-btn py-4 px-3 text-sm sm:text-base whitespace-nowrap focus:outline-none transition">
-                <i class="fa-solid fa-clipboard-list me-1"></i> Peraturan Villa
-            </button>
-        </div>
-    </nav>
-
-    <!-- Main Content Container -->
+<!-- Main Content Container -->
     <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
 
         <!-- TAB 1: RUNDOWN ACARA -->
@@ -153,7 +167,12 @@
 
         <!-- TAB 2: LIST KAMAR -->
         <section id="content-kamar" class="space-y-6 hidden">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
+            <div class="unlock-notice hidden bg-amber-50 border border-amber-200 text-amber-900 p-6 rounded-xl text-center" role="status">
+                <i class="fa-solid fa-lock text-2xl mb-2"></i>
+                <p class="font-semibold">List kamar terkunci</p>
+                <p class="text-sm mt-1">Bagian ini akan dibuka pada 6 November 2026.</p>
+            </div>
+            <div class="tab-content hidden flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
                 <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-bed text-blue-600 me-2"></i>Pembagian Kamar</h2>
                 <div class="w-full sm:w-72 relative">
                     <input type="text" id="searchKamar" onkeyup="filterKamar()" placeholder="Cari nama peserta..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
@@ -162,7 +181,7 @@
             </div>
 
             <!-- Grid Kamar -->
-            <div id="kamarGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="kamarGrid" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Kamar Cewe 1 -->
                 <div class="kamar-card bg-white rounded-xl shadow-sm border border-pink-200 overflow-hidden">
                     <div class="bg-pink-500 text-white px-4 py-3 font-semibold flex justify-between items-center">
@@ -303,7 +322,12 @@
 
         <!-- TAB 3: DAFTAR KELOMPOK -->
         <section id="content-kelompok" class="space-y-6 hidden">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
+            <div class="unlock-notice hidden bg-amber-50 border border-amber-200 text-amber-900 p-6 rounded-xl text-center" role="status">
+                <i class="fa-solid fa-lock text-2xl mb-2"></i>
+                <p class="font-semibold">Daftar kelompok terkunci</p>
+                <p class="text-sm mt-1">Bagian ini akan dibuka pada 6 November 2026.</p>
+            </div>
+            <div class="tab-content hidden flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
                 <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-users text-blue-600 me-2"></i>Pembagian Kelompok</h2>
                 <div class="w-full sm:w-72 relative">
                     <input type="text" id="searchKelompok" onkeyup="filterKelompok()" placeholder="Cari nama anggota..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
@@ -312,7 +336,7 @@
             </div>
 
             <!-- Grid Kelompok -->
-            <div id="kelompokGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="kelompokGrid" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Kelompok 1 -->
                 <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
@@ -535,6 +559,7 @@
     <footer class="bg-slate-800 text-slate-400 py-6 text-center text-xs mt-auto">
         <p>&copy; 2026 STATOR Gathering Pangalengan Bandung. All Rights Reserved.</p>
     </footer>
+    </div>
 
     <!-- Custom Script -->
     <script src="script.js"></script>
