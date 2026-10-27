@@ -188,44 +188,85 @@ body {
     line-height: 1.4;
 }
 
-/* ===== Layar kecil: sidebar jadi ikon saja ===== */
+/* Tombol menu & overlay: disembunyikan di desktop */
+.menu-toggle,
+.side-overlay {
+    display: none;
+}
+
+/* ===== HP: sidebar jadi drawer yang digeser dari kiri ===== */
 @media (max-width: 767px) {
-    :root {
-        --sidebar-w: 4rem;
-    }
-
-    .nav-label,
-    .side-title,
-    .side-sub,
-    .side-footer {
-        display: none;
-    }
-
-    .side-profile {
-        padding: 1.25rem 0.5rem 1rem;
-    }
-
-    .side-logo {
-        width: 2.5rem;
-        height: 2.5rem;
-        margin: 0 auto;
-        font-size: 1.1rem;
-    }
-
-    .tab-btn {
-        justify-content: center;
-        padding: 0.8rem 0;
-    }
-
-    .tab-lock-icon {
-        position: absolute;
-        top: 0.2rem;
-        right: 0.35rem;
-        margin: 0;
-        font-size: 0.55rem;
+    .app-content {
+        margin-left: 0;
+        padding-top: 3.5rem;
     }
 
     .app-header {
-        margin-right: 0.5rem;
+        margin: 0 0.75rem;
+    }
+
+    .menu-toggle {
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 60;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: grid;
+        place-items: center;
+        border-radius: 9999px;
+        background: var(--teal);
+        color: var(--gold);
+        font-size: 1.05rem;
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.3);
+    }
+
+    .side-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 45;
+        background: rgba(15, 23, 42, 0.45);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+    }
+
+    .side-nav {
+        z-index: 50;
+        width: min(16rem, 80vw);
+        transform: translateX(calc(-100% - 1.5rem));
+        transition: transform 0.25s ease;
+        overflow-y: auto;
+    }
+
+    body.sidebar-open .side-nav {
+        transform: translateX(0);
+    }
+
+    body.sidebar-open .side-overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Tombol menu pindah ke kanan sidebar saat terbuka agar tidak menutupi logo */
+    body.sidebar-open .menu-toggle {
+        left: calc(min(16rem, 80vw) + 1.5rem);
+    }
+
+    /* Tab aktif versi HP: pil sederhana tanpa lengkung */
+    .tab-btn {
+        width: calc(100% - 1.5rem);
+        margin: 0 0.75rem;
+        border-radius: 9999px;
+    }
+
+    .tab-btn.active {
+        background: var(--page);
+    }
+
+    .tab-btn.active::before,
+    .tab-btn.active::after {
+        display: none;
     }
 }

@@ -13,8 +13,14 @@
 </head>
 <body class="text-slate-800 font-sans min-h-screen">
 
+    <!-- Tombol menu & overlay (hanya tampil di HP) -->
+    <button type="button" id="menuToggle" class="menu-toggle" onclick="toggleSidebar()" aria-label="Buka menu" aria-controls="sidebar" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="side-overlay" onclick="toggleSidebar(false)"></div>
+
     <!-- Sidebar Navigasi -->
-    <aside class="side-nav" aria-label="Navigasi utama">
+    <aside id="sidebar" class="side-nav" aria-label="Navigasi utama">
         <div class="side-profile">
             <div class="side-logo" aria-hidden="true"><i class="fa-solid fa-bolt"></i></div>
             <p class="side-title">STATOR</p>

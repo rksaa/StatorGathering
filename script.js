@@ -19,7 +19,26 @@ function switchTab(tabName) {
 
     // Aktifkan tombol tab yang dipilih
     targetTab.classList.add('active');
+
+    // Di HP: tutup sidebar setelah memilih menu
+    toggleSidebar(false);
 }
+
+/**
+ * Buka/tutup sidebar (dipakai di layar HP)
+ */
+function toggleSidebar(force) {
+    const isOpen = document.body.classList.toggle('sidebar-open', force);
+    const btn = document.getElementById('menuToggle');
+    if (btn) {
+        btn.setAttribute('aria-expanded', String(isOpen));
+        btn.querySelector('i').className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') toggleSidebar(false);
+});
 
 function initializeLockedTabs() {
     const isUnlocked = Date.now() >= new Date(2026, 10, 6).getTime();
