@@ -1,31 +1,101 @@
-/* ===== Palet ===== */
+/* =========================================================
+   Glassy dashboard — latar hangat, panel kaca, aksen oranye
+   ========================================================= */
 :root {
-    --teal: #3d5a56;
-    --teal-dark: #33504c;
-    --page: #e3edeb;
-    --gold: #d1a22d;
-    --sidebar-w: 15rem;
-    --curve: 1.5rem;
+    --ink: #2b2118;
+    --orange: #e8632b;
+    --orange-dark: #c2410c;
+    --glass: rgba(255, 255, 255, 0.3);
+    --glass-strong: rgba(255, 255, 255, 0.42);
+    --glass-border: rgba(255, 255, 255, 0.55);
+    --glass-shadow: 0 10px 36px rgba(60, 35, 15, 0.22);
+    --blur: blur(22px) saturate(140%);
+    --rail-w: 3.75rem;
 }
 
+/* ===== Latar: ruangan hangat yang di-blur =====
+   (Mau pakai foto sendiri? Ganti background body::before dengan
+   url("foto.jpg") center / cover.) */
 body {
-    background: var(--page);
+    background: #b89b7c;
+    color: var(--ink);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 15% 10%, rgba(255, 240, 220, 0.85) 0, transparent 42%),
+        radial-gradient(ellipse at 90% 20%, rgba(120, 78, 50, 0.7) 0, transparent 45%),
+        radial-gradient(ellipse at 85% 95%, rgba(232, 99, 43, 0.45) 0, transparent 40%),
+        radial-gradient(ellipse at 10% 90%, rgba(150, 165, 140, 0.55) 0, transparent 40%),
+        linear-gradient(160deg, #e3d3bd 0%, #bfa183 45%, #8d6c52 100%);
+    filter: blur(6px);
+    transform: scale(1.05);
+}
+
+/* ===== Efek kaca ===== */
+.side-nav,
+.app-header,
+.app-footer,
+.app-content .bg-white,
+.app-content .bg-slate-50,
+.app-content input,
+.app-content select {
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+}
+
+.app-content .bg-white {
+    background: var(--glass-strong) !important;
+    border-color: var(--glass-border) !important;
+    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    transition: transform 0.2s ease;
+}
+
+.app-content .bg-slate-50 {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.app-content .hover\:bg-slate-50:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.app-content .bg-slate-200 {
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+
+.app-content input,
+.app-content select {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid var(--glass-border);
+}
+
+/* Kartu terangkat sedikit saat di-hover */
+.kamar-card:hover,
+.kelompok-card:hover,
+.stat-card:hover {
+    transform: translateY(-4px);
 }
 
 /* ===== Layout ===== */
 .app-content {
-    margin-left: calc(var(--sidebar-w) + 1rem);
+    margin-left: calc(var(--rail-w) + 2rem);
 }
 
 .app-header {
     margin: 1rem 1rem 0 0;
-    border-radius: 1.5rem;
-    background: var(--teal);
-    box-shadow: 0 10px 25px rgba(61, 90, 86, 0.25);
+    border-radius: 1.75rem;
+    background: rgba(50, 30, 18, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: var(--glass-shadow);
 }
 
 .header-chip {
-    background: var(--gold);
+    background: var(--orange);
     color: #fff;
     padding: 0.25rem 0.625rem;
     border-radius: 9999px;
@@ -33,240 +103,227 @@ body {
     letter-spacing: 0.025em;
 }
 
-/* ===== Sidebar ===== */
-.side-nav {
-    position: fixed;
-    top: 1rem;
-    bottom: 1rem;
-    left: 1rem;
-    width: var(--sidebar-w);
-    z-index: 40;
-    display: flex;
-    flex-direction: column;
-    background: var(--teal);
-    border-radius: 2rem;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+.app-footer {
+    margin: 0 1rem 1rem 0;
+    border-radius: 1.75rem;
+    background: rgba(50, 30, 18, 0.4);
+    color: #f1e6da;
+    border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
-.side-profile {
-    padding: 1.75rem 1rem 1.25rem;
-    text-align: center;
-    background: var(--teal-dark);
-    border-radius: 2rem 2rem 0 0;
-}
-
-.side-logo {
-    width: 3.75rem;
-    height: 3.75rem;
-    margin: 0 auto 0.75rem;
+/* ===== Kartu ringkasan ===== */
+.stat-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
     display: grid;
     place-items: center;
     border-radius: 9999px;
-    border: 2px solid var(--gold);
-    color: var(--gold);
-    font-size: 1.5rem;
+    background: rgba(232, 99, 43, 0.15);
+    border: 1px solid rgba(232, 99, 43, 0.35);
+    color: var(--orange-dark);
 }
 
-.side-title {
-    color: #fff;
+.stat-num {
+    font-size: 1.6rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    line-height: 1.1;
 }
 
-.side-sub {
-    color: #b9cbc8;
-    font-size: 0.7rem;
+.stat-label {
+    font-size: 0.75rem;
+    color: #5b4636;
+}
+
+/* ===== Rail navigasi (desktop) ===== */
+.side-nav {
+    position: fixed;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--rail-w);
+    padding: 1rem 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 9999px;
+    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.side-logo {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(232, 99, 43, 0.4);
 }
 
 .side-items {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    padding: 1.5rem 0 1rem;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-/* Item menu */
 .tab-btn {
     position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.875rem;
-    width: calc(100% - 0.75rem);
-    margin-left: 0.75rem;
-    padding: 0.8rem 1rem 0.8rem 1.1rem;
-    text-align: left;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: #d5e1df;
-    border-radius: 9999px 0 0 9999px;
-    transition: color 0.2s, background-color 0.2s;
+    width: 2.6rem;
+    height: 2.6rem;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    color: #5b4636;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .nav-icon {
-    width: 1.25rem;
-    text-align: center;
-    color: var(--gold);
     font-size: 1rem;
 }
 
-.tab-btn:not(.active):not(:disabled):hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-}
-
-/* Tab aktif: menyatu dengan area konten, dengan lengkung di atas & bawah */
-.tab-btn.active {
-    background: var(--page);
-    color: var(--teal);
-    font-weight: 600;
-}
-
-.tab-btn.active::before,
-.tab-btn.active::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    width: var(--curve);
-    height: var(--curve);
-    background: transparent;
-    pointer-events: none;
-}
-
-.tab-btn.active::before {
-    top: calc(var(--curve) * -1);
-    border-bottom-right-radius: var(--curve);
-    box-shadow: calc(var(--curve) / 2) calc(var(--curve) / 2) 0 calc(var(--curve) / 2) var(--page);
-}
-
-.tab-btn.active::after {
-    bottom: calc(var(--curve) * -1);
-    border-top-right-radius: var(--curve);
-    box-shadow: calc(var(--curve) / 2) calc(var(--curve) / -2) 0 calc(var(--curve) / 2) var(--page);
-}
-
-/* Tab terkunci */
-.tab-btn:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-}
-
-.tab-lock-icon {
-    margin-left: auto;
-    font-size: 0.7rem;
-    color: var(--gold);
-}
-
-.tab-lock-icon[hidden] {
-    display: none !important;
-}
-
-.tab-btn:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: -2px;
-}
-
-/* Info di bawah sidebar */
-.side-footer {
-    margin: auto 1.25rem 1.5rem;
-    padding: 1rem;
-    border-radius: 1rem;
-    background: rgba(0, 0, 0, 0.15);
-}
-
-.side-footer-label {
-    color: var(--gold);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    margin-bottom: 0.35rem;
-}
-
-.side-footer-text {
-    color: #d5e1df;
-    font-size: 0.72rem;
-    line-height: 1.4;
-}
-
-/* Tombol menu & overlay: disembunyikan di desktop */
-.menu-toggle,
-.side-overlay {
+.nav-label {
     display: none;
 }
 
-/* ===== HP: sidebar jadi drawer yang digeser dari kiri ===== */
+.tab-btn:not(.active):hover {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.tab-btn.active {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--orange);
+    box-shadow: 0 4px 14px rgba(60, 35, 15, 0.25);
+}
+
+.tab-btn:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+}
+
+/* Tooltip nama menu */
+.tab-btn::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 1rem);
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.35rem 0.7rem;
+    background: rgba(40, 25, 15, 0.88);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+}
+
+.tab-btn:hover::before,
+.tab-btn:focus-visible::before {
+    opacity: 1;
+}
+
+/* ===== Aksen oranye (kecuali tab Kamar yang berkode warna) ===== */
+.accent-scope .text-blue-500 { color: #c2410c; }
+.accent-scope .text-blue-600 { color: #c2410c; }
+.accent-scope .text-blue-700 { color: #c2410c; }
+.accent-scope .text-indigo-500 { color: #c2410c; }
+.accent-scope .text-indigo-600 { color: #c2410c; }
+.accent-scope .text-indigo-700 { color: #c2410c; }
+.accent-scope .text-blue-800 { color: #7c2d12; }
+.accent-scope .text-blue-900 { color: #7c2d12; }
+.accent-scope .text-indigo-800 { color: #7c2d12; }
+.accent-scope .text-indigo-900 { color: #7c2d12; }
+.accent-scope .bg-blue-600 { background: var(--orange); color: #fff; }
+.accent-scope .bg-indigo-600 { background: var(--orange); color: #fff; }
+.accent-scope .bg-blue-800 { background: rgba(72, 44, 28, 0.78); }
+.accent-scope .bg-indigo-800 { background: rgba(72, 44, 28, 0.78); }
+.accent-scope .bg-blue-50 { background: rgba(232, 99, 43, 0.12); }
+.accent-scope .bg-indigo-50 { background: rgba(232, 99, 43, 0.12); }
+.accent-scope .bg-blue-100 { background: rgba(232, 99, 43, 0.24); }
+.accent-scope .bg-blue-200 { background: rgba(232, 99, 43, 0.24); }
+.accent-scope .bg-indigo-200 { background: rgba(232, 99, 43, 0.24); }
+.accent-scope .border-blue-600 { border-color: var(--orange); }
+.accent-scope .border-indigo-600 { border-color: var(--orange); }
+.accent-scope .border-blue-200 { border-color: rgba(232, 99, 43, 0.3); }
+.accent-scope .border-blue-300 { border-color: rgba(232, 99, 43, 0.3); }
+.accent-scope .border-indigo-200 { border-color: rgba(232, 99, 43, 0.3); }
+.accent-scope .ring-blue-500:focus { --tw-ring-color: var(--orange); }
+.accent-scope :focus-visible { outline-color: var(--orange); }
+
+/* Browser tanpa backdrop-filter: latar lebih pekat agar tetap terbaca */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .side-nav { background: rgba(255, 255, 255, 0.85); }
+    .app-content .bg-white { background: rgba(255, 255, 255, 0.9) !important; }
+    .app-header, .app-footer { background: rgba(50, 30, 18, 0.88); }
+}
+
+/* ===== HP: rail berubah jadi dock di bawah layar ===== */
 @media (max-width: 767px) {
     .app-content {
         margin-left: 0;
-        padding-top: 3.5rem;
+        padding-bottom: 6rem;
     }
 
     .app-header {
-        margin: 0 0.75rem;
+        margin: 0.75rem 0.75rem 0;
     }
 
-    .menu-toggle {
-        position: fixed;
-        top: 0.75rem;
-        left: 0.75rem;
-        z-index: 60;
-        width: 2.5rem;
-        height: 2.5rem;
-        display: grid;
-        place-items: center;
-        border-radius: 9999px;
-        background: var(--teal);
-        color: var(--gold);
-        font-size: 1.05rem;
-        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.3);
-    }
-
-    .side-overlay {
-        display: block;
-        position: fixed;
-        inset: 0;
-        z-index: 45;
-        background: rgba(15, 23, 42, 0.45);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.25s;
+    .app-footer {
+        margin: 0 0.75rem 0.75rem;
     }
 
     .side-nav {
-        z-index: 50;
-        width: min(16rem, 80vw);
-        transform: translateX(calc(-100% - 1.5rem));
-        transition: transform 0.25s ease;
-        overflow-y: auto;
+        top: auto;
+        bottom: 0.75rem;
+        left: 0.75rem;
+        right: 0.75rem;
+        width: auto;
+        transform: none;
+        padding: 0.4rem 0.5rem;
+        border-radius: 1.5rem;
+        flex-direction: row;
+        justify-content: center;
     }
 
-    body.sidebar-open .side-nav {
-        transform: translateX(0);
+    .side-logo {
+        display: none;
     }
 
-    body.sidebar-open .side-overlay {
-        opacity: 1;
-        pointer-events: auto;
+    .side-items {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
     }
 
-    /* Tombol menu pindah ke kanan sidebar saat terbuka agar tidak menutupi logo */
-    body.sidebar-open .menu-toggle {
-        left: calc(min(16rem, 80vw) + 1.5rem);
-    }
-
-    /* Tab aktif versi HP: pil sederhana tanpa lengkung */
     .tab-btn {
-        width: calc(100% - 1.5rem);
-        margin: 0 0.75rem;
-        border-radius: 9999px;
+        width: auto;
+        min-width: 3.6rem;
+        height: 3.2rem;
+        padding: 0.25rem 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.15rem;
+        border-radius: 1rem;
     }
 
-    .tab-btn.active {
-        background: var(--page);
+    .nav-label {
+        display: block;
+        font-size: 0.62rem;
+        font-weight: 600;
     }
 
-    .tab-btn.active::before,
-    .tab-btn.active::after {
+    .tab-btn::before {
         display: none;
     }
 }

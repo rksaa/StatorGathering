@@ -19,44 +19,8 @@ function switchTab(tabName) {
 
     // Aktifkan tombol tab yang dipilih
     targetTab.classList.add('active');
-
-    // Di HP: tutup sidebar setelah memilih menu
-    toggleSidebar(false);
 }
 
-/**
- * Buka/tutup sidebar (dipakai di layar HP)
- */
-function toggleSidebar(force) {
-    const isOpen = document.body.classList.toggle('sidebar-open', force);
-    const btn = document.getElementById('menuToggle');
-    if (btn) {
-        btn.setAttribute('aria-expanded', String(isOpen));
-        btn.querySelector('i').className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
-    }
-}
-
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') toggleSidebar(false);
-});
-
-function initializeLockedTabs() {
-    const isUnlocked = Date.now() >= new Date(2026, 10, 6).getTime();
-
-    ['kamar', 'kelompok'].forEach(tabName => {
-        const tab = document.getElementById('tab-' + tabName);
-        const section = document.getElementById('content-' + tabName);
-
-        tab.disabled = !isUnlocked;
-        tab.setAttribute('aria-disabled', String(!isUnlocked));
-        tab.title = isUnlocked ? '' : 'Dibuka pada 6 November 2026';
-        tab.querySelector('.tab-lock-icon').hidden = isUnlocked;
-        section.querySelector('.unlock-notice').classList.toggle('hidden', isUnlocked);
-        section.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.toggle('hidden', !isUnlocked);
-        });
-    });
-}
 
 /**
  * Filter Rundown Acara berdasarkan Hari
@@ -91,21 +55,73 @@ function filterDay(day, evt) {
     }
 }
 
+let currentKamarCategory = 'all';
+
 /**
- * Filter Pencarian Nama pada List Kamar
+ * Filter Kategori Kamar (Semua, Cewek, Khusus, Cowok)
+ */
+function filterKamarCategory(category, evt) {
+    currentKamarCategory = category;
+
+    const btns = document.querySelectorAll('.kamar-filter-btn');
+    btns.forEach(b => {
+        b.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+        b.classList.add('bg-slate-200', 'text-slate-700');
+    });
+
+    if (evt && evt.target) {
+        const targetBtn = evt.target.closest('.kamar-filter-btn') || evt.target;
+        targetBtn.classList.remove('bg-slate-200', 'text-slate-700');
+        targetBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+    }
+
+    filterKamar();
+}
+
+/**
+ * Filter Pencarian Nama atau Nomor Kamar pada List Kamar
  */
 function filterKamar() {
-    const query = document.getElementById('searchKamar').value.toLowerCase();
-    const cards = document.querySelectorAll('.kamar-card');
+    const inputEl = document.getElementById('searchKamar');
+    const query = inputEl ? inputEl.value.toLowerCase().trim() : '';
+    const sections = document.querySelectorAll('.kamar-section');
+    let totalVisible = 0;
 
-    cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        if (text.includes(query)) {
-            card.classList.remove('hidden');
+    sections.forEach(sec => {
+        const secCat = sec.getAttribute('data-section');
+        const isCatMatch = (currentKamarCategory === 'all' || currentKamarCategory === secCat);
+        const cards = sec.querySelectorAll('.kamar-card');
+        let secVisibleCount = 0;
+
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            const matchesQuery = !query || text.includes(query);
+
+            if (isCatMatch && matchesQuery) {
+                card.classList.remove('hidden');
+                secVisibleCount++;
+                totalVisible++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        // Tampilkan/sembunyikan section berdasarkan kecocokan kartu
+        if (secVisibleCount > 0) {
+            sec.classList.remove('hidden');
         } else {
-            card.classList.add('hidden');
+            sec.classList.add('hidden');
         }
     });
+
+    const emptyMsg = document.getElementById('kamarEmpty');
+    if (emptyMsg) {
+        if (totalVisible === 0) {
+            emptyMsg.classList.remove('hidden');
+        } else {
+            emptyMsg.classList.add('hidden');
+        }
+    }
 }
 
 /**
@@ -125,4 +141,22 @@ function filterKelompok() {
     });
 }
 
-initializeLockedTabs();
+/**
+ * Isi kartu ringkasan dari data yang ada di halaman
+ */
+function renderStats() {
+    const rows = document.querySelectorAll('.day-row');
+    const headers = document.querySelectorAll('.day-row.border-l-4');
+    const values = {
+        hari: headers.length,
+        kegiatan: rows.length - headers.length,
+        kamar: document.querySelectorAll('.kamar-card').length,
+        kelompok: document.querySelectorAll('.kelompok-card').length
+    };
+    Object.entries(values).forEach(([key, value]) => {
+        const el = document.querySelector('[data-stat="' + key + '"]');
+        if (el) el.textContent = value;
+    });
+}
+
+renderStats();
