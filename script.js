@@ -1,5 +1,6 @@
 /**
  * Berpindah antar Tab Utama (Rundown, Kamar, Kelompok, Denah, Peraturan)
+ * dengan efek transisi halaman mulus (Framer Motion style)
  */
 function switchTab(tabName) {
     const targetSection = document.getElementById('content-' + tabName);
@@ -8,8 +9,11 @@ function switchTab(tabName) {
         return;
     }
 
-    // Sembunyikan semua section
-    document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+    // Sembunyikan semua section dan reset kelas animasi
+    document.querySelectorAll('main > section').forEach(sec => {
+        sec.classList.add('hidden');
+        sec.classList.remove('tab-page-enter');
+    });
     
     // Hapus status aktif dari semua tombol tab
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -17,8 +21,17 @@ function switchTab(tabName) {
     // Tampilkan section yang dipilih
     targetSection.classList.remove('hidden');
 
+    // Trigger reflow agar animasi selalu berjalan ulang dengan mulus
+    void targetSection.offsetWidth;
+    targetSection.classList.add('tab-page-enter');
+
     // Aktifkan tombol tab yang dipilih
     targetTab.classList.add('active');
+
+    // Scroll halus ke atas jika pada layar HP
+    if (window.innerWidth < 768) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
 
 
@@ -160,3 +173,11 @@ function renderStats() {
 }
 
 renderStats();
+
+// Jalankan animasi transisi halus pada tab aktif saat pertama kali dibuka
+document.addEventListener('DOMContentLoaded', () => {
+    const activeSec = document.querySelector('main > section:not(.hidden)');
+    if (activeSec) {
+        activeSec.classList.add('tab-page-enter');
+    }
+});
