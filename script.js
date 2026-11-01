@@ -112,16 +112,17 @@ renderStats();
 /**
  * Galeri foto ruangan (Denah Villa)
  * Untuk menambah foto, tambahkan path-nya ke daftar "photos" ruangan terkait,
- * misalnya: photos: ['foto/kamar.jpg', 'foto/kamar-2.jpg']
+ * misalnya: photos: ['foto/kamar.jpg?v=2', 'foto/kamar-2.jpg']
  */
 const ROOM_PHOTOS = {
-    garden:   { title: 'Garden Area',       photos: ['foto/garden.jpg'] },
-    pool:     { title: 'Swimming Pool',     photos: ['foto/pool.jpg'] },
-    dining:   { title: 'Dining & Kitchen',  photos: ['foto/dining.jpg'] },
-    living:   { title: 'Living Room Utama', photos: ['foto/living.jpg'] },
-    billiard: { title: 'Billiard Room',     photos: ['foto/billiard.jpg'] },
-    kamar:    { title: 'Kamar',             photos: ['foto/kamar.jpg'] },
-    karaoke:  { title: 'Karaoke',           photos: ['foto/karaoke.jpg'] }
+    lapangan:    { title: 'Lapangan & Area Parkir', photos: ['foto/lapangan.jpg?v=2'] },
+    pool:        { title: 'Private Pool',           photos: ['foto/pool.jpg?v=2'] },
+    ruangtengah: { title: 'Ruang Tengah',           photos: ['foto/ruang-tengah.jpg?v=2'] },
+    dapur:       { title: 'Dapur',                  photos: ['foto/dapur.jpg?v=2'] },
+    fasilitas:   { title: 'Fasilitas',              photos: ['foto/fasilitas.jpg?v=2'] },
+    kamar:       { title: 'Kamar Tidur',            photos: ['foto/kamar.jpg?v=2'] },
+    karaoke:     { title: 'Ruang Karaoke',          photos: ['foto/karaoke.jpg?v=2'] },
+    toilet:      { title: 'Toilet & Kamar Mandi',   photos: ['foto/toilet.jpg?v=2'] }
 };
 
 let galleryRoom = null;
