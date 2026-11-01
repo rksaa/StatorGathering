@@ -1,6 +1,5 @@
 /**
  * Berpindah antar Tab Utama (Rundown, Kamar, Kelompok, Denah, Peraturan)
- * dengan efek transisi halaman mulus (Framer Motion style)
  */
 function switchTab(tabName) {
     const targetSection = document.getElementById('content-' + tabName);
@@ -9,11 +8,8 @@ function switchTab(tabName) {
         return;
     }
 
-    // Sembunyikan semua section dan reset kelas animasi
-    document.querySelectorAll('main > section').forEach(sec => {
-        sec.classList.add('hidden');
-        sec.classList.remove('tab-page-enter');
-    });
+    // Sembunyikan semua section
+    document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
     
     // Hapus status aktif dari semua tombol tab
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -21,17 +17,8 @@ function switchTab(tabName) {
     // Tampilkan section yang dipilih
     targetSection.classList.remove('hidden');
 
-    // Trigger reflow agar animasi selalu berjalan ulang dengan mulus
-    void targetSection.offsetWidth;
-    targetSection.classList.add('tab-page-enter');
-
     // Aktifkan tombol tab yang dipilih
     targetTab.classList.add('active');
-
-    // Scroll halus ke atas jika pada layar HP
-    if (window.innerWidth < 768) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 }
 
 
@@ -68,73 +55,21 @@ function filterDay(day, evt) {
     }
 }
 
-let currentKamarCategory = 'all';
-
 /**
- * Filter Kategori Kamar (Semua, Cewek, Khusus, Cowok)
- */
-function filterKamarCategory(category, evt) {
-    currentKamarCategory = category;
-
-    const btns = document.querySelectorAll('.kamar-filter-btn');
-    btns.forEach(b => {
-        b.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
-        b.classList.add('bg-slate-200', 'text-slate-700');
-    });
-
-    if (evt && evt.target) {
-        const targetBtn = evt.target.closest('.kamar-filter-btn') || evt.target;
-        targetBtn.classList.remove('bg-slate-200', 'text-slate-700');
-        targetBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
-    }
-
-    filterKamar();
-}
-
-/**
- * Filter Pencarian Nama atau Nomor Kamar pada List Kamar
+ * Filter Pencarian Nama pada List Kamar
  */
 function filterKamar() {
-    const inputEl = document.getElementById('searchKamar');
-    const query = inputEl ? inputEl.value.toLowerCase().trim() : '';
-    const sections = document.querySelectorAll('.kamar-section');
-    let totalVisible = 0;
+    const query = document.getElementById('searchKamar').value.toLowerCase();
+    const cards = document.querySelectorAll('.kamar-card');
 
-    sections.forEach(sec => {
-        const secCat = sec.getAttribute('data-section');
-        const isCatMatch = (currentKamarCategory === 'all' || currentKamarCategory === secCat);
-        const cards = sec.querySelectorAll('.kamar-card');
-        let secVisibleCount = 0;
-
-        cards.forEach(card => {
-            const text = card.textContent.toLowerCase();
-            const matchesQuery = !query || text.includes(query);
-
-            if (isCatMatch && matchesQuery) {
-                card.classList.remove('hidden');
-                secVisibleCount++;
-                totalVisible++;
-            } else {
-                card.classList.add('hidden');
-            }
-        });
-
-        // Tampilkan/sembunyikan section berdasarkan kecocokan kartu
-        if (secVisibleCount > 0) {
-            sec.classList.remove('hidden');
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (text.includes(query)) {
+            card.classList.remove('hidden');
         } else {
-            sec.classList.add('hidden');
+            card.classList.add('hidden');
         }
     });
-
-    const emptyMsg = document.getElementById('kamarEmpty');
-    if (emptyMsg) {
-        if (totalVisible === 0) {
-            emptyMsg.classList.remove('hidden');
-        } else {
-            emptyMsg.classList.add('hidden');
-        }
-    }
 }
 
 /**
@@ -174,10 +109,96 @@ function renderStats() {
 
 renderStats();
 
-// Jalankan animasi transisi halus pada tab aktif saat pertama kali dibuka
-document.addEventListener('DOMContentLoaded', () => {
-    const activeSec = document.querySelector('main > section:not(.hidden)');
-    if (activeSec) {
-        activeSec.classList.add('tab-page-enter');
-    }
+/**
+ * Galeri foto ruangan (Denah Villa)
+ * Untuk menambah foto, tambahkan path-nya ke daftar "photos" ruangan terkait,
+ * misalnya: photos: ['foto/kamar.jpg', 'foto/kamar-2.jpg']
+ */
+const ROOM_PHOTOS = {
+    garden:   { title: 'Garden Area',       photos: ['foto/garden.jpg'] },
+    pool:     { title: 'Swimming Pool',     photos: ['foto/pool.jpg'] },
+    dining:   { title: 'Dining & Kitchen',  photos: ['foto/dining.jpg'] },
+    living:   { title: 'Living Room Utama', photos: ['foto/living.jpg'] },
+    billiard: { title: 'Billiard Room',     photos: ['foto/billiard.jpg'] },
+    kamar:    { title: 'Kamar',             photos: ['foto/kamar.jpg'] },
+    karaoke:  { title: 'Karaoke',           photos: ['foto/karaoke.jpg'] }
+};
+
+let galleryRoom = null;
+let galleryIndex = 0;
+
+function openGallery(key) {
+    const room = ROOM_PHOTOS[key];
+    if (!room) return;
+    galleryRoom = room;
+    galleryIndex = 0;
+
+    document.getElementById('galleryTitle').textContent = room.title;
+    document.getElementById('galleryModal').classList.toggle('single', room.photos.length < 2);
+
+    const thumbs = document.getElementById('galleryThumbs');
+    thumbs.innerHTML = '';
+    room.photos.forEach((src, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'gallery-thumb';
+        btn.setAttribute('aria-label', 'Foto ' + (i + 1));
+        btn.onclick = () => showGalleryPhoto(i);
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        img.loading = 'lazy';
+        btn.appendChild(img);
+        thumbs.appendChild(btn);
+    });
+
+    showGalleryPhoto(0);
+    document.getElementById('galleryModal').classList.add('open');
+    document.body.classList.add('modal-open');
+}
+
+function showGalleryPhoto(index) {
+    if (!galleryRoom) return;
+    const total = galleryRoom.photos.length;
+    galleryIndex = (index + total) % total;
+
+    const img = document.getElementById('galleryImg');
+    img.src = galleryRoom.photos[galleryIndex];
+    img.alt = galleryRoom.title + ' - foto ' + (galleryIndex + 1);
+    document.getElementById('galleryCounter').textContent = (galleryIndex + 1) + ' / ' + total;
+
+    document.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+        t.classList.toggle('active', i === galleryIndex);
+    });
+}
+
+function stepGallery(delta) {
+    showGalleryPhoto(galleryIndex + delta);
+}
+
+function closeGallery() {
+    document.getElementById('galleryModal').classList.remove('open');
+    document.body.classList.remove('modal-open');
+    galleryRoom = null;
+}
+
+document.addEventListener('keydown', e => {
+    if (!galleryRoom) return;
+    if (e.key === 'Escape') closeGallery();
+    if (e.key === 'ArrowLeft') stepGallery(-1);
+    if (e.key === 'ArrowRight') stepGallery(1);
 });
+
+// Geser kiri/kanan di HP untuk ganti foto
+(function () {
+    const stage = document.getElementById('galleryStage');
+    if (!stage) return;
+    let startX = null;
+    stage.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', e => {
+        if (startX === null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) stepGallery(dx < 0 ? 1 : -1);
+        startX = null;
+    });
+})();
