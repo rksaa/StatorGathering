@@ -163,7 +163,16 @@ function showGalleryPhoto(index) {
     galleryIndex = (index + total) % total;
 
     const img = document.getElementById('galleryImg');
-    img.src = galleryRoom.photos[galleryIndex];
+    const errorBox = document.getElementById('galleryError');
+    const src = galleryRoom.photos[galleryIndex];
+    errorBox.hidden = true;
+    img.style.visibility = 'visible';
+    img.onerror = () => {
+        img.style.visibility = 'hidden';
+        errorBox.textContent = 'Foto tidak ditemukan: ' + src + ' (pastikan folder "foto" ikut di-upload ke repo)';
+        errorBox.hidden = false;
+    };
+    img.src = src;
     img.alt = galleryRoom.title + ' - foto ' + (galleryIndex + 1);
     document.getElementById('galleryCounter').textContent = (galleryIndex + 1) + ' / ' + total;
 
