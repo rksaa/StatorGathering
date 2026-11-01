@@ -519,3 +519,166 @@ body.modal-open {
 .gallery-error[hidden] {
     display: none;
 }
+
+/* =========================================================
+   Rundown: baris yang bisa dibuka (Acara Malam)
+   ========================================================= */
+.row-toggle {
+    cursor: pointer;
+}
+
+.row-toggle:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: -2px;
+}
+
+.row-chevron {
+    transition: transform 0.2s ease;
+}
+
+.row-toggle[aria-expanded="true"] .row-chevron {
+    transform: rotate(180deg);
+}
+
+.row-detail {
+    display: none;
+    margin: 0 1.5rem 1.25rem;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.38);
+    border: 1px solid var(--glass-border);
+    -webkit-backdrop-filter: var(--blur);
+    backdrop-filter: var(--blur);
+}
+
+.row-detail.open {
+    display: block;
+    animation: detailIn 0.2s ease;
+}
+
+@keyframes detailIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-title {
+    margin-bottom: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--orange-dark);
+}
+
+.detail-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: acara;
+}
+
+.detail-list li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink);
+    counter-increment: acara;
+}
+
+.detail-list li::before {
+    content: counter(acara);
+    flex-shrink: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    z-index: 1;
+}
+
+/* Garis penghubung antar nomor */
+.detail-list li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 0.78rem;
+    top: calc(0.4rem + 1.6rem);
+    bottom: calc(-0.4rem);
+    width: 2px;
+    background: rgba(232, 99, 43, 0.35);
+}
+
+@media (max-width: 767px) {
+    .row-detail {
+        margin: 0 1rem 1rem;
+        padding: 0.9rem 1rem;
+    }
+}
+
+/* =========================================================
+   Tab terkunci (Kamar & Kelompok sampai tanggal dibuka)
+   ========================================================= */
+.tab-lock-icon {
+    position: absolute;
+    top: -0.1rem;
+    right: -0.1rem;
+    width: 1rem;
+    height: 1rem;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 0.5rem;
+    box-shadow: 0 2px 6px rgba(60, 35, 15, 0.3);
+}
+
+.tab-lock-icon[hidden] {
+    display: none !important;
+}
+
+.tab-btn.locked .nav-icon,
+.tab-btn.locked .nav-label {
+    opacity: 0.6;
+}
+
+.unlock-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    background: rgba(232, 99, 43, 0.15);
+    border: 1px solid rgba(232, 99, 43, 0.35);
+    color: var(--orange-dark);
+    font-size: 1.5rem;
+}
+
+.unlock-count {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 9999px;
+    background: rgba(232, 99, 43, 0.15);
+    border: 1px solid rgba(232, 99, 43, 0.35);
+    color: var(--orange-dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.unlock-count:empty {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .tab-lock-icon {
+        top: 0.1rem;
+        right: 0.45rem;
+    }
+}

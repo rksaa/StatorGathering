@@ -9,7 +9,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css?v=11">
+    <link rel="stylesheet" href="style.css?v=13">
 </head>
 <body class="text-slate-800 font-sans min-h-screen">
 
@@ -21,10 +21,10 @@
                 <i class="fa-solid fa-clock nav-icon"></i><span class="nav-label">Rundown</span>
             </button>
             <button onclick="switchTab('kamar')" id="tab-kamar" class="tab-btn" data-tooltip="List Kamar" aria-label="List Kamar">
-                <i class="fa-solid fa-bed nav-icon"></i><span class="nav-label">Kamar</span>
+                <i class="fa-solid fa-bed nav-icon"></i><span class="nav-label">Kamar</span><i class="fa-solid fa-lock tab-lock-icon"></i>
             </button>
             <button onclick="switchTab('kelompok')" id="tab-kelompok" class="tab-btn" data-tooltip="Kelompok" aria-label="Kelompok">
-                <i class="fa-solid fa-users nav-icon"></i><span class="nav-label">Kelompok</span>
+                <i class="fa-solid fa-users nav-icon"></i><span class="nav-label">Kelompok</span><i class="fa-solid fa-lock tab-lock-icon"></i>
             </button>
             <button onclick="switchTab('denah')" id="tab-denah" class="tab-btn" data-tooltip="Denah Villa" aria-label="Denah Villa">
                 <i class="fa-solid fa-map-location-dot nav-icon"></i><span class="nav-label">Denah</span>
@@ -123,12 +123,28 @@
                     </div>
                     <span class="text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: -</span>
                 </div>
-                <div class="day-row day-hari1 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
-                    <div class="flex items-center gap-3">
-                        <span class="text-sm font-semibold text-blue-600 w-28"><i class="fa-regular fa-clock me-1"></i>18.30 - 21.00</span>
-                        <span class="font-medium text-slate-800">Acara Malam</span>
+                <div class="day-row day-hari1 hover:bg-slate-50 transition">
+                    <div class="row-toggle px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-acara-malam" title="Klik untuk melihat susunan acara malam" onclick="toggleDetail(this)" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleDetail(this); }">
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm font-semibold text-blue-600 w-28"><i class="fa-regular fa-clock me-1"></i>18.30 - 21.00</span>
+                            <span class="font-medium text-slate-800">Acara Malam</span>
+                            <i class="fa-solid fa-chevron-down row-chevron text-xs text-blue-600"></i>
+                        </div>
+                        <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: FERNANDA & ARIEF</span>
                     </div>
-                    <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full w-fit">PIC: FERNANDA & ARIEF</span>
+                    <div id="detail-acara-malam" class="row-detail">
+                        <p class="detail-title"><i class="fa-solid fa-moon me-2"></i>Susunan Acara Malam</p>
+                        <ol class="detail-list">
+                            <li>Pembukaan MC</li>
+                            <li>Sambutan Ketua Pelaksana</li>
+                            <li>Sambutan Leader</li>
+                            <li>Sambutan Karyawan</li>
+                            <li>Pembagian Hadiah Stator Cup dan Fun Game</li>
+                            <li>Penampilan Video</li>
+                            <li>Sesi Keluh Kesah</li>
+                            <li>Tukar Kado</li>
+                        </ol>
+                    </div>
                 </div>
                 <div class="day-row day-hari1 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 transition">
                     <div class="flex items-center gap-3">
@@ -177,7 +193,15 @@
 
         <!-- TAB 2: LIST KAMAR -->
         <section id="content-kamar" class="space-y-6 hidden">
-            <div class="tab-content flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
+            <!-- Pemberitahuan: tab terkunci -->
+            <div class="unlock-notice bg-white rounded-xl shadow-sm border p-8 text-center space-y-3">
+                <div class="unlock-icon"><i class="fa-solid fa-lock"></i></div>
+                <h2 class="text-xl font-bold text-slate-800">List Kamar Belum Dibuka</h2>
+                <p class="text-slate-500 text-sm">Pembagian kamar akan dibuka pada <strong class="unlock-date">5 November 2026</strong>.</p>
+                <p class="unlock-count"></p>
+            </div>
+
+            <div class="tab-content hidden flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
                 <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-bed text-blue-600 me-2"></i>Pembagian Kamar</h2>
                 <div class="w-full sm:w-72 relative">
                     <input type="text" id="searchKamar" onkeyup="filterKamar()" placeholder="Cari nama peserta..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
@@ -186,7 +210,7 @@
             </div>
 
             <!-- Grid Kamar -->
-            <div id="kamarGrid" class="tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="kamarGrid" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Kamar Cewe 1 -->
                 <div class="kamar-card bg-white rounded-xl shadow-sm border border-pink-200 overflow-hidden">
                     <div class="bg-pink-500 text-white px-4 py-3 font-semibold flex justify-between items-center">
@@ -322,7 +346,6 @@
                         <li class="pt-1 flex items-center justify-between">Panitia 5 <span class="text-xs text-amber-600 font-medium">Panitia</span></li>
                     </ul>
                 </div>
-            </div>
 
                 <!-- Kamar Barak -->
                 <div class="kamar-card bg-white rounded-xl shadow-sm border border-teal-200 overflow-hidden">
@@ -343,11 +366,20 @@
                         <li class="pt-1 flex items-center justify-between text-slate-400">Yadi <span class="text-xs text-teal-600 font-medium">(L)</span></li>
                     </ul>
                 </div>
+            </div>
         </section>
 
         <!-- TAB 3: DAFTAR KELOMPOK -->
         <section id="content-kelompok" class="accent-scope space-y-6 hidden">
-            <div class="tab-content flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
+            <!-- Pemberitahuan: tab terkunci -->
+            <div class="unlock-notice bg-white rounded-xl shadow-sm border p-8 text-center space-y-3">
+                <div class="unlock-icon"><i class="fa-solid fa-lock"></i></div>
+                <h2 class="text-xl font-bold text-slate-800">List Kelompok Belum Dibuka</h2>
+                <p class="text-slate-500 text-sm">Pembagian kelompok akan dibuka pada <strong class="unlock-date">6 November 2026</strong>.</p>
+                <p class="unlock-count"></p>
+            </div>
+
+            <div class="tab-content hidden flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border">
                 <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-users text-blue-600 me-2"></i>Pembagian Kelompok</h2>
                 <div class="w-full sm:w-72 relative">
                     <input type="text" id="searchKelompok" onkeyup="filterKelompok()" placeholder="Cari nama anggota..." class="w-full pl-9 pr-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
@@ -356,7 +388,7 @@
             </div>
 
             <!-- Grid Kelompok -->
-            <div id="kelompokGrid" class="tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="kelompokGrid" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Kelompok 1 -->
                 <div class="kelompok-card bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="bg-indigo-600 text-white px-4 py-3 font-semibold flex justify-between items-center">
@@ -405,7 +437,7 @@
                         <li class="pt-1 flex items-center justify-between">Irfan <span class="text-xs text-slate-400">(L)</span></li>
                         <li class="pt-1 flex items-center justify-between">Kiwil <span class="text-xs text-slate-400">(L)</span></li>
                         <li class="pt-1 flex items-center justify-between">Tomy <span class="text-xs text-slate-400">(L)</span></li>
-                        <li class="pt-1 flex items-center justify-between">Della <span class="text-xs text-pink-500">(P)</span></li>
+                        <li class="pt-1 flex items-center justify-between">Dimas <span class="text-xs text-slate-400">(L)</span></li>
                         <li class="pt-1 flex items-center justify-between">Marya <span class="text-xs text-pink-500">(P)</span></li>
                         <li class="pt-1 flex items-center justify-between">Nita <span class="text-xs text-pink-500">(P)</span></li>
                     </ul>
@@ -596,6 +628,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=11"></script>
+    <script src="script.js?v=13"></script>
 </body>
 </html>

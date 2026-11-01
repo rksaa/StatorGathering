@@ -56,6 +56,16 @@ function filterDay(day, evt) {
 }
 
 /**
+ * Buka/tutup detail sebuah acara (contoh: susunan Acara Malam)
+ */
+function toggleDetail(trigger) {
+    const detail = trigger.nextElementSibling;
+    if (!detail) return;
+    const isOpen = detail.classList.toggle('open');
+    trigger.setAttribute('aria-expanded', String(isOpen));
+}
+
+/**
  * Filter Pencarian Nama pada List Kamar
  */
 function filterKamar() {
@@ -108,6 +118,47 @@ function renderStats() {
 }
 
 renderStats();
+
+/**
+ * Penguncian tab berdasarkan tanggal (mengikuti jam perangkat, tengah malam waktu setempat)
+ * Ubah tanggal di sini: new Date(tahun, bulan - 1, tanggal)
+ */
+const TAB_LOCKS = {
+    kamar:    { label: 'List Kamar', unlockAt: new Date(2026, 10, 5) },  // 5 November 2026
+    kelompok: { label: 'Kelompok',   unlockAt: new Date(2026, 10, 6) }   // 6 November 2026
+};
+
+function applyTabLocks() {
+    const now = new Date();
+
+    Object.entries(TAB_LOCKS).forEach(([name, cfg]) => {
+        const unlocked = now >= cfg.unlockAt;
+        const tab = document.getElementById('tab-' + name);
+        const section = document.getElementById('content-' + name);
+        if (!tab || !section) return;
+
+        const shortDate = cfg.unlockAt.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+        tab.classList.toggle('locked', !unlocked);
+        tab.dataset.tooltip = unlocked ? cfg.label : cfg.label + ' (dibuka ' + shortDate + ')';
+        tab.querySelector('.tab-lock-icon').hidden = unlocked;
+
+        section.querySelector('.unlock-notice').classList.toggle('hidden', unlocked);
+        section.querySelectorAll('.tab-content').forEach(el => el.classList.toggle('hidden', !unlocked));
+
+        if (!unlocked) {
+            const longDate = cfg.unlockAt.toLocaleDateString('id-ID', {
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+            });
+            const days = Math.ceil((cfg.unlockAt - now) / 86400000);
+            section.querySelector('.unlock-date').textContent = longDate;
+            section.querySelector('.unlock-count').textContent =
+                days <= 1 ? 'Dibuka besok' : 'Dibuka ' + days + ' hari lagi';
+        }
+    });
+}
+
+applyTabLocks();
+setInterval(applyTabLocks, 60000); // buka otomatis jika halaman masih terbuka saat tanggalnya tiba
 
 /**
  * Galeri foto ruangan (Denah Villa)
