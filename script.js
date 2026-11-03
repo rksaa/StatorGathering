@@ -26,33 +26,13 @@ function switchTab(tabName) {
  * Filter Rundown Acara berdasarkan Hari
  */
 function filterDay(day, evt) {
-    const rows = document.querySelectorAll('.day-row');
-    const btns = document.querySelectorAll('.day-btn');
-    
-    // Reset styling semua tombol hari
-    btns.forEach(b => {
-        b.classList.remove('bg-blue-600', 'text-white');
-        b.classList.add('bg-slate-200', 'text-slate-700');
+    document.querySelectorAll('.day-row').forEach(row => {
+        const show = day === 'all' || row.classList.contains('day-' + day);
+        row.classList.toggle('hidden', !show);
     });
 
-    // Tampilkan/Sembunyikan baris rundown
-    if (day === 'all') {
-        rows.forEach(r => r.classList.remove('hidden'));
-    } else {
-        rows.forEach(r => {
-            if (r.classList.contains('day-' + day)) {
-                r.classList.remove('hidden');
-            } else {
-                r.classList.add('hidden');
-            }
-        });
-    }
-
-    // Terapkan styling tombol yang diklik
-    if (evt && evt.target) {
-        evt.target.classList.replace('bg-slate-200', 'bg-blue-600');
-        evt.target.classList.replace('text-slate-700', 'text-white');
-    }
+    document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+    if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
 }
 
 /**
@@ -100,26 +80,6 @@ function filterKelompok() {
 }
 
 /**
- * Isi kartu ringkasan dari data yang ada di halaman
- */
-function renderStats() {
-    const rows = document.querySelectorAll('.day-row');
-    const headers = document.querySelectorAll('.day-row.border-l-4');
-    const values = {
-        hari: headers.length,
-        kegiatan: rows.length - headers.length,
-        kamar: document.querySelectorAll('.kamar-card').length,
-        kelompok: document.querySelectorAll('.kelompok-card').length
-    };
-    Object.entries(values).forEach(([key, value]) => {
-        const el = document.querySelector('[data-stat="' + key + '"]');
-        if (el) el.textContent = value;
-    });
-}
-
-renderStats();
-
-/**
  * Penguncian tab berdasarkan tanggal (mengikuti jam perangkat, tengah malam waktu setempat)
  * Ubah tanggal di sini: new Date(tahun, bulan - 1, tanggal)
  */
@@ -128,7 +88,7 @@ const TAB_LOCKS = {
     kelompok: { label: 'Kelompok',   unlockAt: new Date(2026, 10, 6) },  // 6 November 2026
     seatbus:  {
         label: 'Seat Bus',
-        unlockAt: new Date(2026, 10, 5),                                  // 5 November 2026
+        unlockAt: new Date(2026, 10, 6),                                  // 6 November 2026
         notice: 'Denah seat bus akan dibuka pada',
         onUnlock: () => busEnsureRendered()
     }
@@ -143,7 +103,7 @@ function ensureLockUi(cfg, tab, section) {
     }
     if (!section.querySelector('.unlock-notice')) {
         const box = document.createElement('div');
-        box.className = 'unlock-notice bg-white rounded-xl shadow-sm border p-8 text-center space-y-3';
+        box.className = 'unlock-notice bg-white rounded-xl border p-8 text-center space-y-3';
         box.innerHTML =
             '<div class="unlock-icon"><i class="fa-solid fa-lock"></i></div>' +
             '<h2 class="text-xl font-bold text-slate-800">' + cfg.label + ' Belum Dibuka</h2>' +
@@ -300,7 +260,7 @@ document.addEventListener('keydown', e => {
    Kategori: mas | perempuan | laki | kosong
    ========================================================= */
 const BUS_ROWS = [
-    ['01', [['Bang Goly', 'mas'], ['Mang Ade', 'mas'], ['Mas Agus', 'mas'], ['Mas Toni', 'mas'], ['Mas Oki', 'mas']]],
+    ['01', [['Bang Goly', 'mas'], ['Mang Ade', 'mas'], ['Mas Agus', 'mas'], ['Mas Anton', 'mas'], ['Mas Oki', 'mas']]],
     ['02', [['Radia', 'perempuan'], ['Rani', 'perempuan'], ['Atiq', 'perempuan'], ['Shela', 'perempuan'], ['Tasya', 'perempuan']]],
     ['03', [['Gita', 'perempuan'], ['Nita', 'perempuan'], ['Anita', 'perempuan'], ['Chacha', 'perempuan'], ['Chelly', 'perempuan']]],
     ['04', [['Della', 'perempuan'], ['El Fitri', 'perempuan'], ['Zahra', 'perempuan'], ['Regina', 'perempuan'], ['Maria', 'perempuan']]],
@@ -371,7 +331,7 @@ function busUpdateCounts() {
         const el = document.querySelector('[data-bus-count="' + key + '"]');
         if (el) el.textContent = value;
     });
-    const stats = { total: total + ' Seat', terisi: (total - empty) + ' Orang', sisa: empty + ' Seat' };
+    const stats = { total: total + ' seat', terisi: (total - empty) + ' orang', sisa: empty + ' seat' };
     Object.entries(stats).forEach(([key, value]) => {
         const el = document.querySelector('[data-bus-stat="' + key + '"]');
         if (el) el.textContent = value;
