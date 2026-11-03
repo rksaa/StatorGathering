@@ -305,10 +305,11 @@ body::before {
     }
 
     .tab-btn {
+        flex: 1 1 0;
         width: auto;
-        min-width: 3.6rem;
+        min-width: 0;
         height: 3.2rem;
-        padding: 0.25rem 0.5rem;
+        padding: 0.25rem 0.1rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -319,8 +320,9 @@ body::before {
 
     .nav-label {
         display: block;
-        font-size: 0.62rem;
+        font-size: 0.6rem;
         font-weight: 600;
+        white-space: nowrap;
     }
 
     .tab-btn::before {
@@ -680,5 +682,452 @@ body.modal-open {
     .tab-lock-icon {
         top: 0.1rem;
         right: 0.45rem;
+    }
+}
+
+/* =========================================================
+   Seat Bus
+   ========================================================= */
+.bus-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--glass-border);
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.bus-btn:hover {
+    background: #fff;
+    color: var(--orange);
+}
+
+.bus-label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #5b4636;
+}
+
+.bus-search-icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7a6553;
+}
+
+.bus-clear {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7a6553;
+}
+
+.bus-clear:hover {
+    color: var(--orange);
+}
+
+.bus-clear[hidden] {
+    display: none !important;
+}
+
+.bus-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--glass-border);
+    color: var(--ink);
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.bus-chip:hover {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.bus-chip.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+}
+
+.bus-dot {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 0.2rem;
+    border: 2px solid;
+}
+
+/* Warna kategori (dipakai kursi, legenda, chip, dan modal) */
+.seat-mas { background: rgba(99, 102, 241, 0.2); border-color: rgba(99, 102, 241, 0.6); color: #3730a3; }
+.seat-perempuan { background: rgba(236, 72, 153, 0.18); border-color: rgba(236, 72, 153, 0.55); color: #9d174d; }
+.seat-laki { background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.55); color: #065f46; }
+.seat-kosong { background: rgba(120, 113, 108, 0.14); border-color: rgba(120, 113, 108, 0.5); color: #57534e; }
+.bus-seat.seat-kosong { border-style: dashed; }
+
+/* Panel denah */
+.bus-scroll {
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+}
+
+.bus-inner {
+    min-width: 600px;
+}
+
+.bus-cabin {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding: 1.1rem 1rem 0.9rem;
+    border-radius: 1rem;
+    background: rgba(50, 30, 18, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.bus-tag {
+    position: absolute;
+    top: -0.6rem;
+    left: 1.25rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 0.3rem;
+    background: var(--orange);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.bus-crew {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.bus-crew-icon {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    border-radius: 0.6rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 1.05rem;
+    color: #ffd2b8;
+}
+
+.bus-crew-icon span {
+    font-size: 0.55rem;
+    font-weight: 700;
+}
+
+.bus-crew-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.bus-crew-sub {
+    font-size: 0.68rem;
+    color: #e7d6c6;
+}
+
+.bus-door {
+    font-family: ui-monospace, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #d9c3ae;
+}
+
+.bus-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid var(--glass-border);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.bus-legend > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.bus-row {
+    display: grid;
+    grid-template-columns: 3.2rem repeat(2, 1fr) 1.5rem repeat(3, 1fr);
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.6rem;
+}
+
+.bus-head {
+    margin-bottom: 0.75rem;
+    text-align: center;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #5b4636;
+}
+
+.bus-row-label {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #5b4636;
+}
+
+.bus-row-label small {
+    display: block;
+    font-size: 0.55rem;
+    font-weight: 500;
+}
+
+.bus-row-11 { color: #b45309; }
+.bus-row-12 { color: #7e22ce; }
+
+.bus-gang {
+    text-align: center;
+    font-family: ui-monospace, monospace;
+    font-size: 0.65rem;
+    color: #a08c7a;
+}
+
+.bus-row-sep {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(91, 70, 54, 0.25);
+}
+
+.bus-access {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    height: 3.5rem;
+    border-radius: 0.75rem;
+    border: 1px dashed rgba(91, 70, 54, 0.4);
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 0.68rem;
+    color: #7a6553;
+    text-align: center;
+}
+
+.bus-back {
+    grid-column: 2 / -1;
+    padding: 0.6rem;
+    border-radius: 0.9rem;
+    background: rgba(126, 34, 206, 0.08);
+    border: 2px solid rgba(126, 34, 206, 0.3);
+}
+
+.bus-back-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    padding: 0 0.25rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #7e22ce;
+}
+
+.bus-back-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+}
+
+.bus-seat {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    height: 3.5rem;
+    padding: 0.4rem 0.5rem;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 0.75rem;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s, box-shadow 0.2s;
+}
+
+.bus-seat:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 14px rgba(60, 35, 15, 0.2);
+}
+
+.bus-seat:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+}
+
+.bus-seat-code {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    opacity: 0.75;
+}
+
+.bus-seat-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.bus-seat.bus-dim {
+    opacity: 0.22;
+}
+
+.bus-seat.bus-match {
+    outline: 3px solid var(--orange);
+    outline-offset: 1px;
+    animation: busPulse 1.2s infinite;
+}
+
+@keyframes busPulse {
+    0% { box-shadow: 0 0 0 0 rgba(232, 99, 43, 0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(232, 99, 43, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(232, 99, 43, 0); }
+}
+
+/* Modal detail seat */
+.bus-modal-panel {
+    width: min(22rem, 100%);
+}
+
+.bus-badge {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 0.75rem;
+    display: grid;
+    place-items: center;
+    border-radius: 1rem;
+    background: var(--orange);
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    box-shadow: 0 6px 16px rgba(232, 99, 43, 0.4);
+}
+
+.bus-modal-name {
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.bus-cat-chip {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.2rem 0.7rem;
+    border: 1px solid;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.bus-detail {
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.9rem;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid var(--glass-border);
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+.bus-detail > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.25rem 0;
+}
+
+.bus-detail dt {
+    color: #5b4636;
+}
+
+.bus-detail dd {
+    font-weight: 700;
+    text-align: right;
+}
+
+.bus-status-ok { color: #047857; }
+.bus-status-empty { color: #b45309; }
+
+@media (max-width: 767px) {
+    .bus-cabin {
+        padding-top: 1.25rem;
+    }
+
+    .bus-door {
+        display: none;
+    }
+}
+
+/* Cetak: hanya tampilkan denah bus */
+@media print {
+    body {
+        background: #fff !important;
+    }
+
+    body::before,
+    .side-nav,
+    .app-header,
+    .app-footer,
+    .no-print {
+        display: none !important;
+    }
+
+    .app-content {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .app-content .bg-white {
+        background: #fff !important;
+        box-shadow: none !important;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    .bus-seat {
+        box-shadow: none !important;
+        animation: none !important;
     }
 }

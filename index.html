@@ -9,7 +9,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css?v=13">
+    <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body class="text-slate-800 font-sans min-h-screen">
 
@@ -20,17 +20,20 @@
             <button onclick="switchTab('rundown')" id="tab-rundown" class="tab-btn active" data-tooltip="Rundown Acara" aria-label="Rundown Acara">
                 <i class="fa-solid fa-clock nav-icon"></i><span class="nav-label">Rundown</span>
             </button>
+            <button onclick="switchTab('peraturan')" id="tab-peraturan" class="tab-btn" data-tooltip="Peraturan Villa" aria-label="Peraturan Villa">
+                <i class="fa-solid fa-clipboard-list nav-icon"></i><span class="nav-label">Peraturan</span>
+            </button>
+            <button onclick="switchTab('denah')" id="tab-denah" class="tab-btn" data-tooltip="Denah Villa" aria-label="Denah Villa">
+                <i class="fa-solid fa-map-location-dot nav-icon"></i><span class="nav-label">Denah</span>
+            </button>
             <button onclick="switchTab('kamar')" id="tab-kamar" class="tab-btn" data-tooltip="List Kamar" aria-label="List Kamar">
                 <i class="fa-solid fa-bed nav-icon"></i><span class="nav-label">Kamar</span><i class="fa-solid fa-lock tab-lock-icon"></i>
             </button>
             <button onclick="switchTab('kelompok')" id="tab-kelompok" class="tab-btn" data-tooltip="Kelompok" aria-label="Kelompok">
                 <i class="fa-solid fa-users nav-icon"></i><span class="nav-label">Kelompok</span><i class="fa-solid fa-lock tab-lock-icon"></i>
             </button>
-            <button onclick="switchTab('denah')" id="tab-denah" class="tab-btn" data-tooltip="Denah Villa" aria-label="Denah Villa">
-                <i class="fa-solid fa-map-location-dot nav-icon"></i><span class="nav-label">Denah</span>
-            </button>
-            <button onclick="switchTab('peraturan')" id="tab-peraturan" class="tab-btn" data-tooltip="Peraturan Villa" aria-label="Peraturan Villa">
-                <i class="fa-solid fa-clipboard-list nav-icon"></i><span class="nav-label">Peraturan</span>
+            <button onclick="switchTab('seatbus')" id="tab-seatbus" class="tab-btn" data-tooltip="Seat Bus" aria-label="Seat Bus">
+                <i class="fa-solid fa-bus-simple nav-icon"></i><span class="nav-label">Seat Bus</span>
             </button>
         </nav>
     </aside>
@@ -601,6 +604,109 @@
             </div>
         </section>
 
+
+        <!-- TAB 6: SEAT BUS -->
+        <section id="content-seatbus" class="accent-scope space-y-6 hidden">
+            <!-- Judul -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-bus-simple text-blue-600"></i> Seat Bus</h2>
+                    <p class="text-sm text-slate-500 mt-1">Denah seat bus tour (59 seat) &middot; formasi 2-3: 2 kursi kiri, gang, 3 kursi kanan &middot; sopir di kanan</p>
+                </div>
+                <div class="flex items-center gap-2 no-print">
+                    <button type="button" onclick="window.print()" class="bus-btn"><i class="fa-solid fa-print"></i> Cetak</button>
+                    <button type="button" onclick="busReset()" class="bus-btn"><i class="fa-solid fa-rotate"></i> Reset</button>
+                </div>
+            </div>
+
+            <!-- Cari & filter -->
+            <div class="bg-white p-4 rounded-xl shadow-sm border no-print">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+                    <div class="lg:col-span-5">
+                        <label class="bus-label" for="busSearch">CARI NAMA PESERTA</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass bus-search-icon"></i>
+                            <input type="text" id="busSearch" oninput="busApply()" autocomplete="off" placeholder="Ketik nama (misal: Atiq, Ryan, Adil) atau nomor seat" class="w-full rounded-lg pl-10 pr-10 py-2.5 text-sm border focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button type="button" id="busClear" onclick="busClearSearch()" class="bus-clear" aria-label="Hapus pencarian" hidden><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7">
+                        <span class="bus-label">FILTER KATEGORI</span>
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" class="bus-chip active" data-cat="all" onclick="busFilter('all')">Semua (<span data-bus-count="all"></span>)</button>
+                            <button type="button" class="bus-chip" data-cat="mas" onclick="busFilter('mas')"><span class="bus-dot seat-mas"></span>Kartap (<span data-bus-count="mas"></span>)</button>
+                            <button type="button" class="bus-chip" data-cat="perempuan" onclick="busFilter('perempuan')"><span class="bus-dot seat-perempuan"></span>Perempuan (<span data-bus-count="perempuan"></span>)</button>
+                            <button type="button" class="bus-chip" data-cat="laki" onclick="busFilter('laki')"><span class="bus-dot seat-laki"></span>Laki-Laki (<span data-bus-count="laki"></span>)</button>
+                            <button type="button" class="bus-chip" data-cat="kosong" onclick="busFilter('kosong')"><span class="bus-dot seat-kosong"></span>Seat Kosong (<span data-bus-count="kosong"></span>)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ringkasan -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 no-print">
+                <div class="stat-card bg-white rounded-2xl p-4 flex items-center gap-3 border">
+                    <div class="stat-icon"><i class="fa-solid fa-couch"></i></div>
+                    <div><p class="stat-num" data-bus-stat="total">-</p><p class="stat-label">Total Kapasitas</p></div>
+                </div>
+                <div class="stat-card bg-white rounded-2xl p-4 flex items-center gap-3 border">
+                    <div class="stat-icon"><i class="fa-solid fa-user-check"></i></div>
+                    <div><p class="stat-num" data-bus-stat="terisi">-</p><p class="stat-label">Terisi (Peserta)</p></div>
+                </div>
+                <div class="stat-card bg-white rounded-2xl p-4 flex items-center gap-3 border">
+                    <div class="stat-icon"><i class="fa-solid fa-chair"></i></div>
+                    <div><p class="stat-num" data-bus-stat="sisa">-</p><p class="stat-label">Sisa Seat</p></div>
+                </div>
+                <div class="stat-card bg-white rounded-2xl p-4 flex items-center gap-3 border">
+                    <div class="stat-icon"><i class="fa-solid fa-table-columns"></i></div>
+                    <div><p class="stat-num" style="font-size: 1.15rem;">2 - Gang - 3</p><p class="stat-label">Formasi Kursi</p></div>
+                </div>
+            </div>
+
+            <!-- Denah bus -->
+            <div class="bg-white rounded-2xl border shadow-sm p-4 sm:p-6">
+                <div class="bus-scroll">
+                    <div class="bus-inner">
+                        <div class="bus-cabin">
+                            <span class="bus-tag">DEPAN BUS</span>
+                            <div class="bus-crew">
+                                <div class="bus-crew-icon"><i class="fa-solid fa-id-badge"></i><span>KRU</span></div>
+                                <div><p class="bus-crew-title">Pemandu / Tour Guide</p><p class="bus-crew-sub">Sisi kiri depan</p></div>
+                            </div>
+                            <div class="bus-door">=== PINTU DEPAN ===</div>
+                            <div class="bus-crew bus-crew-right">
+                                <div class="text-right"><p class="bus-crew-title">SOPIR BUS</p><p class="bus-crew-sub">Kabin kanan</p></div>
+                                <div class="bus-crew-icon"><i class="fa-solid fa-user-tie"></i><span>DRIVER</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bus-legend">
+                            <span><span class="bus-dot seat-mas"></span> Kartap</span>
+                            <span><span class="bus-dot seat-perempuan"></span> Perempuan</span>
+                            <span><span class="bus-dot seat-laki"></span> Laki-Laki</span>
+                            <span><span class="bus-dot seat-kosong"></span> Seat Kosong</span>
+                        </div>
+
+                        <div class="bus-row bus-head">
+                            <span>Baris</span><span>Kiri (A)</span><span>Kiri (B)</span><span>Gang</span><span>Kanan (C)</span><span>Kanan (D)</span><span>Kanan (E)</span>
+                        </div>
+                        <div id="busLayout"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Catatan -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 no-print">
+                <div class="bg-white rounded-xl border shadow-sm p-4">
+                    <h3 class="text-sm font-bold text-blue-600 mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-info"></i> Catatan</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Jika ada peserta yang belum terdaftar, silakan hubungi panitia untuk menambahkan data peserta. Pastikan nama dan nomor seat sesuai dengan daftar peserta.</p>
+                </div>
+                <div class="bg-white rounded-xl border shadow-sm p-4">
+                    <h3 class="text-sm font-bold text-blue-600 mb-2 flex items-center gap-2"><i class="fa-solid fa-user-check"></i> Petunjuk Interaktif</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">Gunakan kolom pencarian untuk mencari posisi duduk seseorang. Ketuk atau klik salah satu kotak kursi untuk melihat nama penumpang dan nomor seat.</p>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -628,6 +734,26 @@
         </div>
     </div>
 
-    <script src="script.js?v=13"></script>
+    <!-- Detail seat bus -->
+    <div id="busModal" class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="busModalName" onclick="if (event.target === this) busCloseModal()">
+        <div class="gallery-panel bus-modal-panel">
+            <div class="gallery-head">
+                <h3>Detail Seat</h3>
+                <button type="button" class="gallery-close" onclick="busCloseModal()" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="text-center">
+                <div id="busModalBadge" class="bus-badge">-</div>
+                <h3 id="busModalName" class="bus-modal-name">-</h3>
+                <p id="busModalCat" class="bus-cat-chip">-</p>
+                <dl class="bus-detail">
+                    <div><dt>Nomor Kursi</dt><dd id="busModalSeat">-</dd></div>
+                    <div><dt>Posisi</dt><dd id="busModalSide">-</dd></div>
+                    <div><dt>Status Seat</dt><dd id="busModalStatus">-</dd></div>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=14"></script>
 </body>
 </html>
