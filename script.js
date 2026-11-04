@@ -88,7 +88,7 @@ const TAB_LOCKS = {
     kelompok: { label: 'Kelompok',   unlockAt: new Date(2026, 10, 6) },  // 6 November 2026
     seatbus:  {
         label: 'Seat Bus',
-        unlockAt: new Date(2026, 10, 6),                                  // 6 November 2026
+        unlockAt: new Date(2026, 10, 5),                                  // 5 November 2026
         notice: 'Denah seat bus akan dibuka pada',
         onUnlock: () => busEnsureRendered()
     }
@@ -264,12 +264,12 @@ const BUS_ROWS = [
     ['02', [['Radia', 'perempuan'], ['Rani', 'perempuan'], ['Atiq', 'perempuan'], ['Shela', 'perempuan'], ['Tasya', 'perempuan']]],
     ['03', [['Gita', 'perempuan'], ['Nita', 'perempuan'], ['Anita', 'perempuan'], ['Chacha', 'perempuan'], ['Chelly', 'perempuan']]],
     ['04', [['Della', 'perempuan'], ['El Fitri', 'perempuan'], ['Zahra', 'perempuan'], ['Regina', 'perempuan'], ['Maria', 'perempuan']]],
-    ['05', [['Dewi', 'perempuan'], ['Uni', 'perempuan'], ['Hafiz', 'laki'], ['Nanda', 'laki'], ['Riksa', 'laki']]],
-    ['06', [['Mudhya', 'perempuan'], ['Alfia', 'perempuan'], ['Taufik', 'laki'], ['Dimas', 'laki'], ['Arif', 'laki']]],
+    ['05', [['Dewi', 'perempuan'], ['Uni', 'perempuan'], ['Hafiz', 'laki'], ['Nanda', 'laki'], ['Dimas', 'laki']]],
+    ['06', [['Mudhya', 'perempuan'], ['Alfia', 'perempuan'], ['Tofik', 'laki'], ['Arif', 'laki'], ['Riksa', 'laki']]],
     ['07', [['Davin', 'laki'], ['Fadli', 'laki'], ['Apri', 'laki'], ['Ryan', 'laki'], ['Jay', 'laki']]],
     ['08', [['Adil', 'laki'], ['Darda', 'laki'], ['Irfan', 'laki'], ['Johari', 'laki'], ['Yanto', 'laki']]],
     ['09', [['Iman', 'laki'], ['Nazmi', 'laki'], ['Arifin Bonge', 'laki'], ['Angga', 'laki'], ['Tomi', 'laki']]],
-    ['10', [['Nirwan', 'laki'], ['Farhan', 'laki'], ['Arifin Cipung', 'laki'], ['Riski', 'laki'], ['Rapli', 'laki']]]
+    ['10', [['Nirwan', 'laki'], ['Farhan', 'laki'], ['Arifin Ilham', 'laki'], ['Riski', 'laki'], ['Rapli', 'laki']]]
 ];
 // Baris 11: hanya sisi kanan (C, D, E); sisi kiri adalah gang/akses pintu belakang
 const BUS_ROW_11 = [['Rizky kiwil', 'laki'], ['Iksan', 'laki'], ['Yadi', 'laki']];
