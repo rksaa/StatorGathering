@@ -80,19 +80,60 @@ function filterKelompok() {
 }
 
 /**
- * Penguncian tab berdasarkan tanggal (mengikuti jam perangkat, tengah malam waktu setempat)
- * Ubah tanggal di sini: new Date(tahun, bulan - 1, tanggal)
+ * Penguncian tab berdasarkan tanggal.
+ *
+ * Waktu diambil dari SERVER (header "Date" dari respons GitHub Pages), bukan dari jam HP,
+ * jadi memajukan tanggal atau mengganti zona waktu di perangkat tidak bisa membuka kunci.
+ * Setelah sinkron, waktu dihitung maju dengan performance.now() yang tidak terpengaruh
+ * perubahan jam perangkat. Jika waktu server tidak bisa diperiksa, tab tetap terkunci.
+ * Khusus saat file dibuka langsung dari komputer (file://) dipakai jam perangkat untuk uji coba.
  */
+const TIME_ZONE = 'Asia/Jakarta';
+
+// Tengah malam (00.00) WIB pada tanggal tersebut. Bulan memakai angka biasa (11 = November).
+function wib(year, month, day) {
+    return new Date(Date.UTC(year, month - 1, day) - 7 * 60 * 60 * 1000);
+}
+
 const TAB_LOCKS = {
-    kamar:    { label: 'List Kamar', unlockAt: new Date(2026, 10, 5) },  // 5 November 2026
-    kelompok: { label: 'Kelompok',   unlockAt: new Date(2026, 10, 6) },  // 6 November 2026
+    kamar:    { label: 'List Kamar', unlockAt: wib(2026, 11, 5) },  // 5 November 2026
+    kelompok: { label: 'Kelompok',   unlockAt: wib(2026, 11, 6) },  // 6 November 2026
     seatbus:  {
         label: 'Seat Bus',
-        unlockAt: new Date(2026, 10, 5),                                  // 5 November 2026
+        unlockAt: wib(2026, 11, 6),                                  // 6 November 2026
         notice: 'Denah seat bus akan dibuka pada',
         onUnlock: () => busEnsureRendered()
     }
 };
+
+let serverBase = null;   // { time: waktu server (ms), perf: performance.now() saat sinkron }
+let syncTried = false;
+
+async function syncServerTime() {
+    try {
+        if (location.protocol === 'file:') {
+            serverBase = { time: Date.now(), perf: performance.now() };
+            return;
+        }
+        const url = location.origin + location.pathname + '?_=' + Date.now();
+        const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+        const dateHeader = res.headers.get('Date');
+        if (!dateHeader) return;
+        const age = Number(res.headers.get('Age')) || 0;
+        const time = new Date(dateHeader).getTime() + age * 1000;
+        if (isNaN(time)) return;
+        serverBase = { time: time, perf: performance.now() };
+    } catch (e) {
+        // gagal: pakai sinkron terakhir bila ada, kalau belum pernah berhasil tab tetap terkunci
+    } finally {
+        syncTried = true;
+    }
+}
+
+function serverNow() {
+    if (!serverBase) return null;
+    return new Date(serverBase.time + (performance.now() - serverBase.perf));
+}
 
 // Untuk tab yang belum punya gembok/kartu pemberitahuan di HTML, buat lewat JS
 function ensureLockUi(cfg, tab, section) {
@@ -114,17 +155,17 @@ function ensureLockUi(cfg, tab, section) {
 }
 
 function applyTabLocks() {
-    const now = new Date();
+    const now = serverNow();   // null selama waktu server belum diketahui
 
     Object.entries(TAB_LOCKS).forEach(([name, cfg]) => {
-        const unlocked = now >= cfg.unlockAt;
+        const unlocked = now !== null && now >= cfg.unlockAt;
         const tab = document.getElementById('tab-' + name);
         const section = document.getElementById('content-' + name);
         if (!tab || !section) return;
 
         ensureLockUi(cfg, tab, section);
 
-        const shortDate = cfg.unlockAt.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+        const shortDate = cfg.unlockAt.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', timeZone: TIME_ZONE });
         tab.classList.toggle('locked', !unlocked);
         tab.dataset.tooltip = unlocked ? cfg.label : cfg.label + ' (dibuka ' + shortDate + ')';
         tab.querySelector('.tab-lock-icon').hidden = unlocked;
@@ -140,12 +181,20 @@ function applyTabLocks() {
             if (cfg.onUnlock) cfg.onUnlock();
         } else {
             const longDate = cfg.unlockAt.toLocaleDateString('id-ID', {
-                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: TIME_ZONE
             });
-            const days = Math.ceil((cfg.unlockAt - now) / 86400000);
             section.querySelector('.unlock-date').textContent = longDate;
-            section.querySelector('.unlock-count').textContent =
-                days <= 1 ? 'Dibuka besok' : 'Dibuka ' + days + ' hari lagi';
+
+            let countText;
+            if (now === null) {
+                countText = syncTried
+                    ? 'Waktu server belum bisa diperiksa. Periksa koneksi internet, lalu muat ulang halaman.'
+                    : 'Memeriksa waktu server...';
+            } else {
+                const days = Math.ceil((cfg.unlockAt - now) / 86400000);
+                countText = days <= 1 ? 'Dibuka besok' : 'Dibuka ' + days + ' hari lagi';
+            }
+            section.querySelector('.unlock-count').textContent = countText;
         }
     });
 }
@@ -260,12 +309,12 @@ document.addEventListener('keydown', e => {
    Kategori: mas | perempuan | laki | kosong
    ========================================================= */
 const BUS_ROWS = [
-    ['01', [['Bang Goly', 'mas'], ['Mang Ade', 'mas'], ['Mas Agus', 'mas'], ['Mas Anton', 'mas'], ['Mas Oki', 'mas']]],
+    ['01', [['Bang Goly', 'mas'], ['Mang Ade', 'mas'], ['Mas Agus', 'mas'], ['Mas Toni', 'mas'], ['Mas Oki', 'mas']]],
     ['02', [['Radia', 'perempuan'], ['Rani', 'perempuan'], ['Atiq', 'perempuan'], ['Shela', 'perempuan'], ['Tasya', 'perempuan']]],
     ['03', [['Gita', 'perempuan'], ['Nita', 'perempuan'], ['Anita', 'perempuan'], ['Chacha', 'perempuan'], ['Chelly', 'perempuan']]],
     ['04', [['Della', 'perempuan'], ['El Fitri', 'perempuan'], ['Zahra', 'perempuan'], ['Regina', 'perempuan'], ['Maria', 'perempuan']]],
     ['05', [['Dewi', 'perempuan'], ['Uni', 'perempuan'], ['Hafiz', 'laki'], ['Nanda', 'laki'], ['Dimas', 'laki']]],
-    ['06', [['Mudhya', 'perempuan'], ['Alfia', 'perempuan'], ['Tofik', 'laki'], ['Arif', 'laki'], ['Riksa', 'laki']]],
+    ['06', [['Mudhya', 'perempuan'], ['Alfia', 'perempuan'], ['Tofikk', 'laki'], ['Arif', 'laki'], ['Riksa', 'laki']]],
     ['07', [['Davin', 'laki'], ['Fadli', 'laki'], ['Apri', 'laki'], ['Ryan', 'laki'], ['Jay', 'laki']]],
     ['08', [['Adil', 'laki'], ['Darda', 'laki'], ['Irfan', 'laki'], ['Johari', 'laki'], ['Yanto', 'laki']]],
     ['09', [['Iman', 'laki'], ['Nazmi', 'laki'], ['Arifin Bonge', 'laki'], ['Angga', 'laki'], ['Tomi', 'laki']]],
@@ -432,5 +481,14 @@ function busEnsureRendered() {
 })();
 
 // Terapkan kunci tab setelah semua fungsi dan data (termasuk Seat Bus) siap
-applyTabLocks();
-setInterval(applyTabLocks, 60000); // buka otomatis jika halaman masih terbuka saat tanggalnya tiba
+async function refreshLocks() {
+    await syncServerTime();
+    applyTabLocks();
+}
+
+applyTabLocks();                        // awal: semua tab bertanggal terkunci sampai waktu server diperiksa
+refreshLocks();
+setInterval(refreshLocks, 60000);       // sinkron ulang tiap menit; buka otomatis saat tanggalnya tiba
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) refreshLocks();
+});
