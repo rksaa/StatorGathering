@@ -100,7 +100,7 @@ const TAB_LOCKS = {
     kelompok: { label: 'Kelompok',   unlockAt: wib(2026, 11, 6) },  // 6 November 2026
     seatbus:  {
         label: 'Seat Bus',
-        unlockAt: wib(2026, 11, 6),                                  // 6 November 2026
+        unlockAt: wib(2026, 11, 5),                                  // 5 November 2026
         notice: 'Denah seat bus akan dibuka pada',
         onUnlock: () => busEnsureRendered()
     }
